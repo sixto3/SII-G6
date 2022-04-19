@@ -1,10 +1,60 @@
 package es.uma.g6;
 
+import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 
 @Entity
+@IdClass(Depositada_en.Depositada_enId.class)
 public class Depositada_en {
+	public static class Depositada_enId implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Referencia referencia;
+		private Pooled pooled;
+		
+		public Depositada_enId() {
+			
+		}
+		public Depositada_enId(Referencia referencia, Pooled pooled) {
+			super();
+			this.referencia = referencia;
+			this.pooled = pooled;
+		}
+		
+		public Referencia getReferencia() {
+			return referencia;
+		}
+		public void setReferencia(Referencia referencia) {
+			this.referencia = referencia;
+		}
+		public Pooled getPooled() {
+			return pooled;
+		}
+		public void setPooled(Pooled pooled) {
+			this.pooled = pooled;
+		}
+		
+		@Override
+		public int hashCode() {
+			return Objects.hash(pooled, referencia);
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Depositada_enId other = (Depositada_enId) obj;
+			return Objects.equals(pooled, other.pooled) && Objects.equals(referencia, other.referencia);
+		}
+	}
+	
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "REFERENCIA",nullable = false)

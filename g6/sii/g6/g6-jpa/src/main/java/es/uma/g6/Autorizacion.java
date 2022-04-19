@@ -2,11 +2,64 @@ package es.uma.g6;
 
 
 import java.util.Objects;
-
+import java.io.Serializable;
 import javax.persistence.*;
 @Entity
+@IdClass(Autorizacion.AutorizacionId.class)
 public class Autorizacion {
+	public static class AutorizacionId implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Empresa empresa;
+		private Autorizado autorizado;
+		
+		public AutorizacionId() {
+			
+		}
 
+		public AutorizacionId(Empresa empresa, Autorizado autorizado) {
+			super();
+			this.empresa = empresa;
+			this.autorizado = autorizado;
+		}
+
+		public Empresa getEmpresa() {
+			return empresa;
+		}
+
+		public void setEmpresa(Empresa empresa) {
+			this.empresa = empresa;
+		}
+
+		public Autorizado getAutorizado() {
+			return autorizado;
+		}
+
+		public void setAutorizado(Autorizado autorizado) {
+			this.autorizado = autorizado;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(autorizado, empresa);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			AutorizacionId other = (AutorizacionId) obj;
+			return Objects.equals(autorizado, other.autorizado) && Objects.equals(empresa, other.empresa);
+		}
+		
+	}
+	
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "EMPRESA_ID",nullable = false)
