@@ -19,6 +19,8 @@
   		</dependency>
   	</dependencies>
   </dependencyManagement>
-<modules>  <module>g6-jpa</module>
+	<modules> 
+		<module>g6-jpa</module>
+		<module>g6-ejb</module>
   </modules>
 </project>
