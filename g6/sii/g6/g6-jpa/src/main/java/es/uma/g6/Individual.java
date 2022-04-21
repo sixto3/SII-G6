@@ -19,30 +19,39 @@ public class Individual extends Cliente{
     @Column(name= "Apellido", nullable = false)
     private String Apellido;
 
-    @Column(name= "Contrasenia", nullable = false)
-    private String Contraseña;
+
 
 
     private Date Fecha_Nacimiento;
 
-    
-    
-    public Individual(int id, int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
-			String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado,
-			List<Fintech> cuentas_fintech, String nombre, String apellido, String contraseña, Date fecha_Nacimiento) {
-		super(id, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion, codigo_Postal, ciudad, país,
-				bloqueado, cuentas_fintech);
-		Nombre = nombre;
-		Apellido = apellido;
-		Contraseña = contraseña;
-		Fecha_Nacimiento = fecha_Nacimiento;
-	}
 
-
-	public Individual() {
-
+    public Individual(int id, int contraseña, int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja, String direccion, int codigo_Postal,
+                      String ciudad, String país, boolean bloqueado, String nombre, String apellido, Date fecha_Nacimiento) {
+        super(id, contraseña, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja,
+                direccion, codigo_Postal, ciudad, país, bloqueado);
+        Nombre = nombre;
+        Apellido = apellido;
+        Fecha_Nacimiento = fecha_Nacimiento;
     }
 
+    public Individual(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja, String direccion,
+                      int codigo_Postal, String ciudad, String país, boolean bloqueado, String nombre,
+                      String apellido, Date fecha_Nacimiento) {
+        super(identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion, codigo_Postal, ciudad, país, bloqueado);
+        Nombre = nombre;
+        Apellido = apellido;
+        Fecha_Nacimiento = fecha_Nacimiento;
+    }
+
+    public Individual(String nombre, String apellido, Date fecha_Nacimiento) {
+        Nombre = nombre;
+        Apellido = apellido;
+        Fecha_Nacimiento = fecha_Nacimiento;
+    }
+
+    public Individual() {
+
+    }
 
     public String getNombre() {
         return Nombre;
@@ -60,13 +69,6 @@ public class Individual extends Cliente{
         Apellido = apellido;
     }
 
-    public String getContraseña() {
-        return Contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        Contraseña = contraseña;
-    }
 
     public Date getFecha_Nacimiento() {
         return Fecha_Nacimiento;
@@ -97,16 +99,12 @@ public class Individual extends Cliente{
 	}
 
 
-	@Override
+    @Override
     public String toString() {
         return "Individual{" +
                 "Nombre='" + Nombre + '\'' +
                 ", Apellido='" + Apellido + '\'' +
-                ", Contraseña='" + Contraseña + '\'' +
                 ", Fecha_Nacimiento=" + Fecha_Nacimiento +
                 '}';
     }
-
-
-
 }

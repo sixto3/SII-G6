@@ -16,8 +16,6 @@ public class Autorizado extends Usuario{
 	@Column(nullable=false)
 	private String apellido;
 	@Column(nullable=false)
-	private String contrasenia;
-	@Column(nullable=false)
 	private String direccion;
 	private Date fecha_nacimiento;
 	private String estado;
@@ -27,25 +25,36 @@ public class Autorizado extends Usuario{
 	private boolean bloqueado;
 	@OneToMany(mappedBy = "autorizado")
 	private List<Autorizacion> lista_empresas;
-	
-	public Autorizado(int id, long identificacion, String nombre, String apellido, String contraseña, String direccion,
-			Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin) {
-		super(id);
+
+	public Autorizado(int id, int contraseña, long identificacion, String nombre, String apellido, String direccion,
+					  Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
+		super(id, contraseña);
 		this.identificacion = identificacion;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.contrasenia = contraseña;
 		this.direccion = direccion;
 		this.fecha_nacimiento = fecha_nacimiento;
 		this.estado = estado;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
+		this.bloqueado = bloqueado;
+	}
+
+	public Autorizado(long identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
+		this.identificacion = identificacion;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.estado = estado;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.bloqueado = bloqueado;
 	}
 
 	public Autorizado() {
 
 	}
-
 
 	public long getIdentificacion() {
 		return identificacion;
@@ -69,14 +78,6 @@ public class Autorizado extends Usuario{
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
-	}
-
-	public String getContraseña() {
-		return contrasenia;
-	}
-
-	public void setContraseña(String contraseña) {
-		this.contrasenia = contraseña;
 	}
 
 	public String getDireccion() {
@@ -143,9 +144,17 @@ public class Autorizado extends Usuario{
 
 	@Override
 	public String toString() {
-		return "Autorizado [identificacion=" + identificacion + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", contraseña=" + contrasenia + ", direccion=" + direccion + ", fecha_nacimiento=" + fecha_nacimiento
-				+ ", estado=" + estado + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + "]";
+		return "Autorizado{" +
+				"identificacion=" + identificacion +
+				", nombre='" + nombre + '\'' +
+				", apellido='" + apellido + '\'' +
+				", direccion='" + direccion + '\'' +
+				", fecha_nacimiento=" + fecha_nacimiento +
+				", estado='" + estado + '\'' +
+				", fechaInicio=" + fechaInicio +
+				", fechaFin=" + fechaFin +
+				", bloqueado=" + bloqueado +
+				'}';
 	}
 }
 	

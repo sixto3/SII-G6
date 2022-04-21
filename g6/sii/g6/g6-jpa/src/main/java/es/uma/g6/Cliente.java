@@ -42,26 +42,37 @@ public class Cliente extends Usuario{
     
     @OneToMany (mappedBy = "duenio")
     private List<Fintech> cuentas_fintech;
-    
- 
-    public Cliente(int id, int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
-			String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado,
-			List<Fintech> cuentas_fintech) {
-		super(id);
-		Identificacion = identificacion;
-		Tipo_Cliente = tipo_Cliente;
-		Estado = estado;
-		Fecha_Alta = fecha_Alta;
-		Fecha_Baja = fecha_Baja;
-		Direccion = direccion;
-		Codigo_Postal = codigo_Postal;
-		Ciudad = ciudad;
-		País = país;
-		this.bloqueado = bloqueado;
-		this.cuentas_fintech = cuentas_fintech;
-	}
 
-	public Cliente() {
+
+    public Cliente(int id, int contraseña, int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
+                   String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado) {
+        super(id, contraseña);
+        Identificacion = identificacion;
+        Tipo_Cliente = tipo_Cliente;
+        Estado = estado;
+        Fecha_Alta = fecha_Alta;
+        Fecha_Baja = fecha_Baja;
+        Direccion = direccion;
+        Codigo_Postal = codigo_Postal;
+        Ciudad = ciudad;
+        País = país;
+        this.bloqueado = bloqueado;
+    }
+
+    public Cliente(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja, String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado) {
+        Identificacion = identificacion;
+        Tipo_Cliente = tipo_Cliente;
+        Estado = estado;
+        Fecha_Alta = fecha_Alta;
+        Fecha_Baja = fecha_Baja;
+        Direccion = direccion;
+        Codigo_Postal = codigo_Postal;
+        Ciudad = ciudad;
+        País = país;
+        this.bloqueado = bloqueado;
+    }
+
+    public Cliente() {
 
     }
 
