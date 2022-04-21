@@ -12,14 +12,16 @@ public class Administrador extends Usuario {
     @Column(name= "Nombre", nullable = false)
     private int Nombre;
 
-    @Column(name= "Contrasenia", nullable = false)
-    private int Contraseña;
 
-    public Administrador(int id, int identificacion, int nombre, int contraseña) {
-        super(id);
+    public Administrador(int id, int contraseña, int identificacion, int nombre) {
+        super(id, contraseña);
         Identificacion = identificacion;
         Nombre = nombre;
-        Contraseña = contraseña;
+    }
+
+    public Administrador(int identificacion, int nombre) {
+        Identificacion = identificacion;
+        Nombre = nombre;
     }
 
     public Administrador() {
@@ -43,20 +45,13 @@ public class Administrador extends Usuario {
         Nombre = nombre;
     }
 
-    public int getContraseña() {
-        return Contraseña;
-    }
 
-    public void setContraseña(int contraseña) {
-        Contraseña = contraseña;
-    }
 
     @Override
     public String toString() {
         return "Administrador{" +
                 "Identificacion=" + Identificacion +
                 ", Nombre=" + Nombre +
-                ", Contraseña=" + Contraseña +
                 '}';
     }
 

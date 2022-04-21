@@ -11,9 +11,13 @@ public class Usuario {
     @Column
     private int id;
 
+    @Column(name= "Contrasenia",unique = true, nullable = false)
+    private int Contraseña;
 
-    public Usuario(int id) {
+
+    public Usuario(int id, int contraseña) {
         this.id = id;
+        Contraseña = contraseña;
     }
 
     public Usuario() {
@@ -26,6 +30,14 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getContraseña() {
+        return Contraseña;
+    }
+
+    public void setContraseña(int contraseña) {
+        Contraseña = contraseña;
     }
 
     @Override
@@ -47,6 +59,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
+                ", Contraseña=" + Contraseña +
                 '}';
     }
 }
