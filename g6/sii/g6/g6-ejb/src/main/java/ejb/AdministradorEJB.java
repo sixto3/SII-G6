@@ -10,6 +10,13 @@ import es.uma.g6.*;
 import exceptions.AdministracionException;
 import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteNoEncontradoException;
+import exceptions.PooledExistenteException;
+import exceptions.SegregadaExistenteException;
+import exceptions.PooledNoEncontradaException;
+import exceptions.SegregadaNoEncontradaException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AdministradorEJB implements gestionAdministrador{
 
@@ -45,5 +52,46 @@ public class AdministradorEJB implements gestionAdministrador{
 		em.persist(autorizado);
 		
 	}
+
+	@Override
+	public void abrirCuentaPooled(Pooled pooled) throws AdministracionException {
+		// TODO Auto-generated method stub
+		Pooled pool = em.find(Pooled.class, pooled.getIBAN());
+		if(pool != null) throw new PooledExistenteException();
+		em.persist(pooled);
+	}
+
+	@Override
+	public void abrirCuentaSegregada(Segregada segregada) throws AdministracionException {
+		// TODO Auto-generated method stub
+		Segregada seg = em.find(Segregada.class, segregada.getIBAN());
+		if(seg != null) throw new SegregadaExistenteException();
+		em.persist(segregada);
+	}
+
+	@Override
+	public void cerrarCuentaPooled(Pooled pooled) throws AdministracionException {
+		// TODO Auto-generated method stub
+		Pooled pool = em.find(Pooled.class, pooled.getIBAN());
+		if(pool == null) throw new PooledNoEncontradaException();
+		Date fechaActual = new Date();
+		pooled.setEstado("Cerrada");
+		pooled.setFechaCierre(fechaActual);
+		em.persist(pooled);
+	}
+
+	@Override
+	public void cerrarCuentaSegregada(Segregada segregada) throws AdministracionException {
+		// TODO Auto-generated method stub
+		Segregada seg = em.find(Segregada.class, segregada.getIBAN());
+		if(seg == null) throw new SegregadaNoEncontradaException();
+		Date fechaActual = new Date();
+		segregada.setEstado("Cerrada");
+		segregada.setFechaCierre(fechaActual);
+		em.persist(segregada);
+	}
+	
+		
+	
 
 }
