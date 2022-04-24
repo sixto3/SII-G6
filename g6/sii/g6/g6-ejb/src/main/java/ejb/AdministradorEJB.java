@@ -2,14 +2,19 @@ package ejb;
 
 import java.util.logging.Logger;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.security.auth.message.config.AuthConfig;
 
 import es.uma.g6.*;
 import exceptions.AdministracionException;
+import exceptions.AutorizacionExistenteException;
+import exceptions.AutorizadoExistenteException;
 import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteNoEncontradoException;
+import exceptions.ClienteNoValidoException;
+import exceptions.ClienteExistenteException;
 import exceptions.PooledExistenteException;
 import exceptions.SegregadaExistenteException;
 import exceptions.PooledNoEncontradaException;
@@ -18,12 +23,63 @@ import exceptions.SegregadaNoEncontradaException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Stateless 
 public class AdministradorEJB implements gestionAdministrador{
 
 	private static final Logger LOG = Logger.getLogger(AdministradorEJB.class.getCanonicalName());
 	
 	@PersistenceContext(name="Administración")
 	private EntityManager em;
+	
+	public boolean esPersonaJuridica(String cad) {
+		boolean enc = false;
+		cad.toUpperCase();
+		if(cad.compareTo("JURIDICA") ==0) {
+			enc = true;
+		}
+		return enc;
+	}
+	
+	public boolean esPersonaFisica(String cad) {
+		boolean enc = false;
+		cad.toUpperCase();
+		if(cad.compareTo("FISICA") ==0) {
+			enc = true;
+		}
+		return enc;
+	}
+	
+	@Override
+	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado,Cliente cliente, Autorizacion autorizacion) throws ClienteNoEncontradoException, 
+					AutorizadoExistenteException,AutorizacionExistenteException {
+		
+		Autorizacion au = em.find(Autorizacion.class, autorizacion.getId());
+		Cliente cl =em.find(Cliente.class, cliente.getId());
+		Autorizado aut = em.find(Autorizado.class, autorizado.getId());
+
+		if(cl == null) throw new ClienteNoEncontradoException();
+		if(aut != null) throw new AutorizadoExistenteException();
+		if(au != null) throw new AutorizacionExistenteException();
+		
+		String tipo = cl.getTipo_Cliente();
+		if(!esPersonaJuridica(tipo)) throw new ClienteNoValidoException();
+		au.setAutorizado(aut);
+		
+		em.persist(au);
+		
+		
+	}
+	@Override 
+	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException{
+		
+		Cliente cl = em.find(Cliente.class, cliente.getId());
+		if(cl != null) throw new ClienteExistenteException();
+		
+		String tipo = cl.getTipo_Cliente();
+		 
+		if(!esPersonaJuridica(tipo) || !esPersonaFisica(tipo)) throw new ClienteNoValidoException();
+		em.persist(cl);
+	}
 	
 	@Override
 	public void modificarDatosACliente(Cliente cliente) throws ClienteNoEncontradoException {
