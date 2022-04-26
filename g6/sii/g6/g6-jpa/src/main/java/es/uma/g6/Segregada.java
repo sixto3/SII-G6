@@ -6,17 +6,20 @@ import javax.persistence.*;
 @Entity
 public class Segregada extends Fintech{
 	private double comision;
+	@OneToOne
+	private Referencia ref;
 
 	public Segregada() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Segregada(Long iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion, double comision) {
+	public Segregada(Long iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion, double comision, Referencia ref) {
 		super(iBAN, sWIFT, estado, fechaApertura, fechaCierre, clasificacion);
 		this.comision = comision;
+		this.ref = ref;
+		// TODO Auto-generated constructor stub
 	}
-
 
 	public double getComision() {
 		return comision;
@@ -26,14 +29,20 @@ public class Segregada extends Fintech{
 		this.comision = comision;
 	}
 
+	public Referencia getRef() {
+		return ref;
+	}
 
+	public void setRef(Referencia ref) {
+		this.ref = ref;
+	}
 
 	@Override
 	public String toString() {
-		return "Segregada [comision=" + comision + ", getEstado()=" + getEstado() + ", getFechaApertura()="
-				+ getFechaApertura() + ", getFechaCierre()=" + getFechaCierre() + ", getClasificacion()="
-				+ getClasificacion() + ", toString()=" + super.toString() + ", getIBAN()=" + getIBAN() + ", getSWIFT()="
-				+ getSWIFT() + ", getClass()=" + getClass() + "]";
+		return "Segregada [comision=" + comision + ", ref=" + ref + ", getEstado()=" + getEstado()
+				+ ", getFechaApertura()=" + getFechaApertura() + ", getFechaCierre()=" + getFechaCierre()
+				+ ", getClasificacion()=" + getClasificacion() + ", toString()=" + super.toString() + ", getIBAN()="
+				+ getIBAN() + ", getSWIFT()=" + getSWIFT() + ", getClass()=" + getClass() + "]";
 	}
 
 	@Override

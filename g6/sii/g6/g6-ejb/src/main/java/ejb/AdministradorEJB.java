@@ -2,7 +2,6 @@ package ejb;
 
 import java.util.logging.Logger;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.security.auth.message.config.AuthConfig;
@@ -12,9 +11,11 @@ import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
 import exceptions.AutorizadoExistenteException;
 import exceptions.AutorizadoNoEncontradoException;
+import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
-import exceptions.ClienteExistenteException;
+import exceptions.CuentaNoEncontradaException;
+import exceptions.FaltaDeFondosException;
 import exceptions.PooledExistenteException;
 import exceptions.SegregadaExistenteException;
 import exceptions.PooledNoEncontradaException;
@@ -23,7 +24,6 @@ import exceptions.SegregadaNoEncontradaException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Stateless 
 public class AdministradorEJB implements gestionAdministrador{
 
 	private static final Logger LOG = Logger.getLogger(AdministradorEJB.class.getCanonicalName());
@@ -31,81 +31,18 @@ public class AdministradorEJB implements gestionAdministrador{
 	@PersistenceContext(name="Administración")
 	private EntityManager em;
 	
-	public boolean esPersonaJuridica(String cad) {
-		boolean enc = false;
-		cad.toUpperCase();
-		if(cad.compareTo("JURIDICA") ==0) {
-			enc = true;
-		}
-		return enc;
-	}
-	
-	public boolean esPersonaFisica(String cad) {
-		boolean enc = false;
-		cad.toUpperCase();
-		if(cad.compareTo("FISICA") ==0) {
-			enc = true;
-		}
-		return enc;
-	}
-	
-	@Override
-	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado,Cliente cliente, Autorizacion autorizacion) throws ClienteNoEncontradoException, 
-					AutorizadoExistenteException,AutorizacionExistenteException {
-		
-		Autorizacion au = em.find(Autorizacion.class, autorizacion.getId());
-		Cliente cl =em.find(Cliente.class, cliente.getId());
-		Autorizado aut = em.find(Autorizado.class, autorizado.getId());
-
-		if(cl == null) throw new ClienteNoEncontradoException();
-		if(aut != null) throw new AutorizadoExistenteException();
-		if(au != null) throw new AutorizacionExistenteException();
-		
-		String tipo = cl.getTipo_Cliente();
-		if(!esPersonaJuridica(tipo)) throw new ClienteNoValidoException();
-		au.setAutorizado(aut);
-		
-		em.persist(au);
-		
-		
-	}
-	@Override 
-	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException{
-		
-		Cliente cl = em.find(Cliente.class, cliente.getId());
-		if(cl != null) throw new ClienteExistenteException();
-		
-		String tipo = cl.getTipo_Cliente();
-		 
-		if(!esPersonaJuridica(tipo) || !esPersonaFisica(tipo)) throw new ClienteNoValidoException();
-		em.persist(cl);
-	}
-	
 	@Override
 	public void modificarDatosACliente(Cliente cliente) throws ClienteNoEncontradoException {
 		Cliente cl = em.find(Cliente.class, cliente.getId());
 		if(cl == null) throw new ClienteNoEncontradoException();
-		cliente.setId(cl.getId());
-		cliente.setBloqueado(cl.isBloqueado());
-		cliente.setContraseña(cl.getContraseña());
-		em.persist(cliente);
+		em.merge(cliente);
 	}
 
 	@Override
 	public void modificarDatosAAutorizado(Autorizado autorizado) throws AutorizadoNoEncontradoException{
 		Autorizado au = em.find(Autorizado.class, autorizado.getId());
 		if(au == null) throw new AutorizadoNoEncontradoException();
-		autorizado.setApellido(au.getApellido());
-		autorizado.setContraseña(au.getContraseña());
-		autorizado.setDireccion(au.getDireccion());
-		autorizado.setEstado(au.getEstado());
-		autorizado.setFecha_nacimiento(au.getFecha_nacimiento());
-		autorizado.setFechaFin(au.getFechaFin());
-		autorizado.setFechaInicio(au.getFechaInicio());
-		autorizado.setId(au.getId());
-		autorizado.setIdentificacion(au.getIdentificacion());
-		autorizado.setNombre(au.getNombre());
-		em.persist(autorizado);
+		em.merge(autorizado);
 		
 	}
 
@@ -146,8 +83,70 @@ public class AdministradorEJB implements gestionAdministrador{
 		segregada.setFechaCierre(fechaActual);
 		em.persist(segregada);
 	}
-	
+
+	@Override
+	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente,
+			Autorizacion autorizacion)
+			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad)
+			throws CuentaNoEncontradaException, FaltaDeFondosException {
+		String tipoOrigen = tipoDeCuenta(cOrigen);
+		String tipoDestino = tipoDeCuenta(cDestino);
+	
+		if(tipoOrigen == null)throw new CuentaNoEncontradaException();
+		if(tipoDestino == null)throw new CuentaNoEncontradaException();
+		
+		if(tipoOrigen.equals("Segregada")) {
+			
+			if(tipoDestino.equals("Segregada")) {
+				Segregada cDsg = em.find(Segregada.class, cOrigen.getIBAN());
+				
+				
+			}else if(tipoDestino.equals("Pooled")) {
+				
+			}else {
+				
+			}
+		}else if(tipoOrigen.equals("Pooled")) {
+			if(tipoDestino.equals("Segregada")) {
+				
+			}else if(tipoDestino.equals("Pooled")) {
+				
+			}else {
+				
+			}
+		}else {
+			if(tipoDestino.equals("Segregada")) {
+				
+			}else if(tipoDestino.equals("Pooled")) {
+				
+			}else {
+				
+			}
+		}
+
+		return t;
+	}
+	
+	private String tipoDeCuenta(Cuenta c){
+		String res = "";
+		if(em.find(Segregada.class, c.getIBAN()) != null) res = "Segregada";
+		else if(em.find(Pooled.class, c.getIBAN()) != null) res = "Pooled";
+		else if (em.find(Cuenta.class, c.getIBAN()) != null) res = "Externa";
+		else res = null;
+		return res;
+	}
 	
 
 }
