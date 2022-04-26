@@ -15,6 +15,20 @@ public class Pooled extends Fintech{
 	public Pooled() {
 		super();
 	}
+	
+	
+	
+	public List<Depositada_en> getDepositada_pooled() {
+		return depositada_pooled;
+	}
+
+
+
+	public void setDepositada_pooled(List<Depositada_en> depositada_pooled) {
+		this.depositada_pooled = depositada_pooled;
+	}
+
+
 
 	@Override
 	public String toString() {

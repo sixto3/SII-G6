@@ -14,6 +14,7 @@ import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
+import exceptions.CuentaNoACeroException;
 import exceptions.CuentaNoEncontradaException;
 import exceptions.FaltaDeFondosException;
 import exceptions.PooledExistenteException;
@@ -23,6 +24,7 @@ import exceptions.SegregadaNoEncontradaException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AdministradorEJB implements gestionAdministrador{
 
@@ -47,7 +49,7 @@ public class AdministradorEJB implements gestionAdministrador{
 	}
 
 	@Override
-	public void abrirCuentaPooled(Pooled pooled) throws AdministracionException {
+	public void abrirCuentaPooled(Pooled pooled) throws PooledExistenteException {
 		// TODO Auto-generated method stub
 		Pooled pool = em.find(Pooled.class, pooled.getIBAN());
 		if(pool != null) throw new PooledExistenteException();
@@ -55,7 +57,7 @@ public class AdministradorEJB implements gestionAdministrador{
 	}
 
 	@Override
-	public void abrirCuentaSegregada(Segregada segregada) throws AdministracionException {
+	public void abrirCuentaSegregada(Segregada segregada) throws SegregadaExistenteException {
 		// TODO Auto-generated method stub
 		Segregada seg = em.find(Segregada.class, segregada.getIBAN());
 		if(seg != null) throw new SegregadaExistenteException();
@@ -63,10 +65,16 @@ public class AdministradorEJB implements gestionAdministrador{
 	}
 
 	@Override
-	public void cerrarCuentaPooled(Pooled pooled) throws AdministracionException {
+	public void cerrarCuentaPooled(Pooled pooled) throws PooledNoEncontradaException, CuentaNoACeroException{
 		// TODO Auto-generated method stub
 		Pooled pool = em.find(Pooled.class, pooled.getIBAN());
 		if(pool == null) throw new PooledNoEncontradaException();
+		List<Depositada_en> list = pooled.getDepositada_pooled();
+		double saldo=0;
+		for(Depositada_en cuenta : list) {
+			saldo+=cuenta.getSaldo();
+		}
+		if(saldo != 0) throw new CuentaNoACeroException();
 		Date fechaActual = new Date();
 		pooled.setEstado("Cerrada");
 		pooled.setFechaCierre(fechaActual);
@@ -74,10 +82,11 @@ public class AdministradorEJB implements gestionAdministrador{
 	}
 
 	@Override
-	public void cerrarCuentaSegregada(Segregada segregada) throws AdministracionException {
+	public void cerrarCuentaSegregada(Segregada segregada) throws SegregadaNoEncontradaException, CuentaNoACeroException {
 		// TODO Auto-generated method stub
 		Segregada seg = em.find(Segregada.class, segregada.getIBAN());
 		if(seg == null) throw new SegregadaNoEncontradaException();
+		if(segregada.getRef().getSaldo() != 0) throw new CuentaNoACeroException();
 		Date fechaActual = new Date();
 		segregada.setEstado("Cerrada");
 		segregada.setFechaCierre(fechaActual);

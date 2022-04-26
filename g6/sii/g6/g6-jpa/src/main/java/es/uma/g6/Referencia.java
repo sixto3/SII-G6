@@ -11,7 +11,7 @@ public class Referencia extends Cuenta {
 	private String sucursal;
 	private String pais;
 	@Column(nullable = false)
-	private double saldo;
+	private float saldo;
 	@Temporal(TemporalType.DATE)
 	private Date fechaApertura;
 	private String estado;
@@ -41,7 +41,7 @@ public class Referencia extends Cuenta {
 	public double getSaldo() {
 		return saldo;
 	}
-	public void setSaldo(double saldo) {
+	public void setSaldo(float saldo) {
 		this.saldo = saldo;
 	}
 	public Date getFechaApertura() {
