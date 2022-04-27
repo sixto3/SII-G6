@@ -7,22 +7,34 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column
     private int id;
 
-    @Column(name= "Contrasenia",unique = true, nullable = false)
+    @Column(name = "Nombre", unique = true, nullable = false)
+    private String Nombre;
+
+    @Column(name = "Contrasenia", nullable = false)
     private int Contraseña;
-    
-    @OneToOne
+
+    @Column(name = "Administrador", nullable = false)
+    private boolean Administrador;
+
+    @OneToOne(mappedBy = "usuarioAut")
     private Autorizado autorizado;
-    
-    @OneToOne
+
+    @OneToOne(mappedBy = "usuario")
     private Cliente cliente;
-    
-    public Usuario(int id, int contraseña) {
+
+
+
+
+    public Usuario(int id, String nombre, int contraseña, boolean administrador) {
         this.id = id;
+        Nombre = nombre;
         Contraseña = contraseña;
+        Administrador = administrador;
     }
 
     public Usuario() {
@@ -37,12 +49,28 @@ public class Usuario {
         this.id = id;
     }
 
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String nombre) {
+        Nombre = nombre;
+    }
+
     public int getContraseña() {
         return Contraseña;
     }
 
     public void setContraseña(int contraseña) {
         Contraseña = contraseña;
+    }
+
+    public boolean isAdministrador() {
+        return Administrador;
+    }
+
+    public void setAdministrador(boolean administrador) {
+        Administrador = administrador;
     }
 
     @Override
@@ -64,8 +92,12 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
+                ", Nombre='" + Nombre + '\'' +
                 ", Contraseña=" + Contraseña +
+                ", Administrador=" + Administrador +
                 '}';
     }
 }
+
+
 
