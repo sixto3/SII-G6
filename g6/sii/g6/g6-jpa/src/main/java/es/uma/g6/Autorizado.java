@@ -3,7 +3,6 @@ package es.uma.g6;
 
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.List;
 import javax.persistence.*;
 
@@ -32,8 +31,12 @@ public class Autorizado {
 	private Usuario usuarioAut;
 
 
-	public Autorizado(long identificacion, String nombre, String apellido,
-					  String direccion, Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
+	
+
+
+
+	public Autorizado(long identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento,
+			String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
 		this.identificacion = identificacion;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -45,9 +48,18 @@ public class Autorizado {
 		this.bloqueado = bloqueado;
 	}
 
-
 	public Autorizado() {
 
+	}
+
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public long getIdentificacion() {
@@ -90,13 +102,7 @@ public class Autorizado {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
+	
 
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -147,18 +153,12 @@ public class Autorizado {
 
 	@Override
 	public String toString() {
-		return "Autorizado{" +
-				"identificacion=" + identificacion +
-				", nombre='" + nombre + '\'' +
-				", apellido='" + apellido + '\'' +
-				", direccion='" + direccion + '\'' +
-				", fecha_nacimiento=" + fecha_nacimiento +
-				", estado='" + estado + '\'' +
-				", fechaInicio=" + fechaInicio +
-				", fechaFin=" + fechaFin +
-				", bloqueado=" + bloqueado +
-				'}';
+		return "Autorizado [identificacion=" + identificacion + ", nombre=" + nombre + ", apellido=" + apellido
+				+ ", direccion=" + direccion + ", fecha_nacimiento=" + fecha_nacimiento + ", estado=" + estado
+				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", bloqueado=" + bloqueado + "]";
 	}
+
+	
 }
 	
 	

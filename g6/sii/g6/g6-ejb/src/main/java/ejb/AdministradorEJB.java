@@ -46,7 +46,6 @@ public class AdministradorEJB implements gestionAdministrador{
 		Autorizado au = em.find(Autorizado.class, autorizado.getId());
 		if(au == null) throw new AutorizadoNoEncontradoException();
 		em.merge(autorizado);
-
 	}
 
 	@Override
@@ -180,6 +179,25 @@ public class AdministradorEJB implements gestionAdministrador{
 		}
 		em.merge(cliente);
 	}
+	
+	@Override
+	public void bajaAutorizado(Autorizado autorizado) throws AdministracionException {
+		
+		Autorizado  c = em.find(Autorizado.class, autorizado.getIdentificacion());
+		if (c==null) {
+			throw new AdministracionException("Cuenta no encontrada");
+			
+		}else {
+			
+			autorizado.setBloqueado(false);
+			
+	
+			autorizado.setEstado("baja");
+		}
+		em.merge(autorizado);
+	}
+	
+	
 	
 
 }
