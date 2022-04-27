@@ -23,6 +23,8 @@ import exceptions.PooledNoEncontradaException;
 import exceptions.SegregadaNoEncontradaException;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,13 +41,12 @@ public class AdministradorEJB implements gestionAdministrador{
 		if(cl == null) throw new ClienteNoEncontradoException();
 		em.merge(cliente);
 	}
-
 	@Override
 	public void modificarDatosAAutorizado(Autorizado autorizado) throws AutorizadoNoEncontradoException{
 		Autorizado au = em.find(Autorizado.class, autorizado.getId());
 		if(au == null) throw new AutorizadoNoEncontradoException();
 		em.merge(autorizado);
-		
+
 	}
 
 	@Override
@@ -98,6 +99,10 @@ public class AdministradorEJB implements gestionAdministrador{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
 
 	@Override
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente,
@@ -155,6 +160,25 @@ public class AdministradorEJB implements gestionAdministrador{
 		else if (em.find(Cuenta.class, c.getIBAN()) != null) res = "Externa";
 		else res = null;
 		return res;
+	}
+	@Override
+	public void bajaCliente(Cliente cliente) throws AdministracionException {
+		
+		Cliente c = em.find(Cliente.class, cliente.getIdentificacion());
+		if (c==null) {
+			throw new AdministracionException("Cuenta no encontrada");
+			
+		}else {
+			
+			cliente.setBloqueado(false);
+			cliente.setEstado("baja");
+			Calendar calendar = Calendar.getInstance();
+            java.util.Date currentDate = calendar.getTime();
+            java.sql.Date date = new java.sql.Date(currentDate.getTime());
+			cliente.setFecha_Baja(date);
+		     	
+		}
+		em.merge(cliente);
 	}
 	
 

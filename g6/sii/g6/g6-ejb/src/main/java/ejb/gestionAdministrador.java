@@ -8,8 +8,7 @@ import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
 import exceptions.CuentaNoEncontradaException;
-import exceptions.FaltaDeFondosException;
-
+import exceptions.FaltaDeFondosExcept
 public interface gestionAdministrador {
 
 	
@@ -20,6 +19,7 @@ public interface gestionAdministrador {
 	public void cerrarCuentaPooled(Pooled pooled) throws AdministracionException;
 	public void cerrarCuentaSegregada(Segregada segregada) throws AdministracionException;
 	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException;
+	public void bajagit Cliente(Cliente cliente) throws AdministracionException;
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente, Autorizacion autorizacion)
 			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException;
 	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad) throws CuentaNoEncontradaException, FaltaDeFondosException;
