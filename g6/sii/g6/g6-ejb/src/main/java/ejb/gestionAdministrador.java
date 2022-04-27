@@ -8,10 +8,6 @@ import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
 import exceptions.CuentaNoEncontradaException;
-<<<<<<< HEAD
-=======
-import exceptions.FaltaDeFondosExcept
->>>>>>> 7ac87f941d0b2c45f45037d82c0e6b357783f5da
 import exceptions.FaltaDeFondosException;
 public interface gestionAdministrador {
 
