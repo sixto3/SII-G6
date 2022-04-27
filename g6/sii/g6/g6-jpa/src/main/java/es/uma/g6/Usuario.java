@@ -13,8 +13,13 @@ public class Usuario {
 
     @Column(name= "Contrasenia",unique = true, nullable = false)
     private int Contraseña;
-
-
+    
+    @OneToOne
+    private Autorizado autorizado;
+    
+    @OneToOne
+    private Cliente cliente;
+    
     public Usuario(int id, int contraseña) {
         this.id = id;
         Contraseña = contraseña;
