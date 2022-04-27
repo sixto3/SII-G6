@@ -8,7 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class Autorizado extends Usuario{
+public class Autorizado {
 	@Column(unique = true)
 	private long identificacion;
 	@Column(nullable=false)
@@ -26,9 +26,14 @@ public class Autorizado extends Usuario{
 	@OneToMany(mappedBy = "autorizado")
 	private List<Autorizacion> lista_empresas;
 
-	public Autorizado(int id, int contraseña, long identificacion, String nombre, String apellido, String direccion,
-					  Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
-		super(id, contraseña);
+	@Id
+	@JoinColumn(name = "ID")
+	@OneToOne
+	private Usuario usuarioAut;
+
+
+	public Autorizado(long identificacion, String nombre, String apellido,
+					  String direccion, Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
 		this.identificacion = identificacion;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -40,17 +45,6 @@ public class Autorizado extends Usuario{
 		this.bloqueado = bloqueado;
 	}
 
-	public Autorizado(long identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
-		this.identificacion = identificacion;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.direccion = direccion;
-		this.fecha_nacimiento = fecha_nacimiento;
-		this.estado = estado;
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
-		this.bloqueado = bloqueado;
-	}
 
 	public Autorizado() {
 
@@ -120,26 +114,35 @@ public class Autorizado extends Usuario{
 		this.fechaFin = fechaFin;
 	}
 
-	
+	public boolean isBloqueado() {
+		return bloqueado;
+	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(identificacion);
-		return result;
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
+
+	public List<Autorizacion> getLista_empresas() {
+		return lista_empresas;
+	}
+
+	public void setLista_empresas(List<Autorizacion> lista_empresas) {
+		this.lista_empresas = lista_empresas;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Autorizado other = (Autorizado) obj;
-		return identificacion == other.identificacion;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Autorizado that = (Autorizado) o;
+
+		return identificacion == that.identificacion;
+	}
+
+	@Override
+	public int hashCode() {
+		return (int) (identificacion ^ (identificacion >>> 32));
 	}
 
 	@Override
