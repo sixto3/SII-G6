@@ -1,5 +1,7 @@
 package es.uma.g6;
 
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -8,11 +10,7 @@ import javax.persistence.*;
 public class Usuario {
 
     @Id
-    @GeneratedValue
-    @Column
-    private int id;
-
-    @Column(name = "Nombre", unique = true, nullable = false)
+    @Column(name = "Nombre",nullable = false)
     private String Nombre;
 
     @Column(name = "Contrasenia", nullable = false)
@@ -24,30 +22,24 @@ public class Usuario {
     @OneToOne(mappedBy = "usuarioAut")
     private Autorizado autorizado;
 
-    @OneToOne(mappedBy = "usuario")
+	@OneToOne(mappedBy = "usuario")
     private Cliente cliente;
 
 
+    public Usuario(String nombre, int contraseña, boolean administrador, Autorizado autorizado, Cliente cliente) {
+		super();
+		Nombre = nombre;
+		Contraseña = contraseña;
+		Administrador = administrador;
+		this.autorizado = autorizado;
+		this.cliente = cliente;
+	}
 
 
-    public Usuario(int id, String nombre, int contraseña, boolean administrador) {
-        this.id = id;
-        Nombre = nombre;
-        Contraseña = contraseña;
-        Administrador = administrador;
+	public Usuario() {
+
     }
 
-    public Usuario() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return Nombre;
@@ -72,31 +64,47 @@ public class Usuario {
     public void setAdministrador(boolean administrador) {
         Administrador = administrador;
     }
+    
+    public Autorizado getAutorizado() {
+		return autorizado;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setAutorizado(Autorizado autorizado) {
+		this.autorizado = autorizado;
+	}
 
-        Usuario usuario = (Usuario) o;
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-        return id == usuario.id;
-    }
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(Nombre);
+	}
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", Nombre='" + Nombre + '\'' +
-                ", Contraseña=" + Contraseña +
-                ", Administrador=" + Administrador +
-                '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(Nombre, other.Nombre);
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [Nombre=" + Nombre + ", Contraseña=" + Contraseña + ", Administrador=" + Administrador
+				+ ", autorizado=" + autorizado + ", cliente=" + cliente + "]";
+	}
+
+   
 }
 
 

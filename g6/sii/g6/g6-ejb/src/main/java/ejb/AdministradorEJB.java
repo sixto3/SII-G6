@@ -78,7 +78,7 @@ public class AdministradorEJB implements gestionAdministrador{
 		Date fechaActual = new Date();
 		pooled.setEstado("Cerrada");
 		pooled.setFechaCierre(fechaActual);
-		em.persist(pooled);
+		em.merge(pooled);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class AdministradorEJB implements gestionAdministrador{
 		Date fechaActual = new Date();
 		segregada.setEstado("Cerrada");
 		segregada.setFechaCierre(fechaActual);
-		em.persist(segregada);
+		em.merge(segregada);
 	}
 
 	@Override
@@ -196,6 +196,22 @@ public class AdministradorEJB implements gestionAdministrador{
 			autorizado.setEstado("baja");
 		}
 		em.merge(autorizado);
+	}
+	@Override
+	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException {
+		// TODO Auto-generated method stub
+		Usuario u =em.find(Usuario.class, nombre_usuario);
+		if(u==null) throw new UsuarioNoEncontradoException();
+		if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("empresa")) throw new EmpresaNoPuedeHacerLogin();
+		if(u.getContraseña() != contrasenia) throw new ContraseñaIncorrectaException();
+		if(u.getAutorizado()!=null) {
+			if(!u.getAutorizado().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+		}
+		if(u.getCliente()!=null){
+			if(!u.getCliente().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+		}
+		
+		return new Usuario(nombre_usuario, contrasenia, u.isAdministrador(), u.getAutorizado(), u.getCliente());
 	}
 	
 	

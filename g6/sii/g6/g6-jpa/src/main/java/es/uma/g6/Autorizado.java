@@ -17,6 +17,7 @@ public class Autorizado {
 	@Column(nullable=false)
 	private String direccion;
 	private Date fecha_nacimiento;
+	@Column(nullable=false)
 	private String estado;
 	private Date fechaInicio;
 	private Date fechaFin;

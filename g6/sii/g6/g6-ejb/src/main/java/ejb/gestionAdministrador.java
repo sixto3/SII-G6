@@ -23,5 +23,7 @@ public interface gestionAdministrador {
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente, Autorizacion autorizacion)
 			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException;
 	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad) throws CuentaNoEncontradaException, FaltaDeFondosException;
-	void bajaAutorizado(Autorizado autorizado) throws AdministracionException;
+	public void bajaAutorizado(Autorizado autorizado) throws AdministracionException;
+	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException;
+	
 }
