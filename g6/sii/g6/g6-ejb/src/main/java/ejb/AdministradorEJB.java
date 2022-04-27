@@ -37,13 +37,13 @@ public class AdministradorEJB implements gestionAdministrador{
 	
 	@Override
 	public void modificarDatosACliente(Cliente cliente) throws ClienteNoEncontradoException {
-		Cliente cl = em.find(Cliente.class, cliente.getId());
+		Cliente cl = em.find(Cliente.class, cliente.getIdentificacion());
 		if(cl == null) throw new ClienteNoEncontradoException();
 		em.merge(cliente);
 	}
 	@Override
 	public void modificarDatosAAutorizado(Autorizado autorizado) throws AutorizadoNoEncontradoException{
-		Autorizado au = em.find(Autorizado.class, autorizado.getId());
+		Autorizado au = em.find(Autorizado.class, autorizado.getIdentificacion());
 		if(au == null) throw new AutorizadoNoEncontradoException();
 		em.merge(autorizado);
 
@@ -117,6 +117,7 @@ public class AdministradorEJB implements gestionAdministrador{
 			throws CuentaNoEncontradaException, FaltaDeFondosException {
 		String tipoOrigen = tipoDeCuenta(cOrigen);
 		String tipoDestino = tipoDeCuenta(cDestino);
+		Transaccion t = new Transaccion();
 	
 		if(tipoOrigen == null)throw new CuentaNoEncontradaException();
 		if(tipoDestino == null)throw new CuentaNoEncontradaException();

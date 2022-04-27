@@ -9,6 +9,7 @@ import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
 import exceptions.CuentaNoEncontradaException;
 import exceptions.FaltaDeFondosExcept
+import exceptions.FaltaDeFondosException;
 public interface gestionAdministrador {
 
 	
