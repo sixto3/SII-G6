@@ -24,6 +24,7 @@ import exceptions.SegregadaExistenteException;
 import exceptions.PooledNoEncontradaException;
 import exceptions.SegregadaNoEncontradaException;
 import exceptions.UsuarioNoActivoException;
+import exceptions.UsuarioNoEncontradoException;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -334,6 +335,12 @@ public class AdministradorEJB implements gestionAdministrador{
 		}
 		
 		
+	}
+	@Override
+	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad)
+			throws CuentaNoEncontradaException, FaltaDeFondosException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

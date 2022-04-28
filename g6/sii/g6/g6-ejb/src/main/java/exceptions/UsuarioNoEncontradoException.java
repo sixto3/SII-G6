@@ -1,5 +1,5 @@
 package exceptions;
 
-public class UsuarioNoEncontradoException {
+public class UsuarioNoEncontradoException extends AdministracionException{
 
 }
