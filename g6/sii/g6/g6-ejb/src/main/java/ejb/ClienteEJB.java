@@ -8,7 +8,9 @@ import javax.persistence.PersistenceContext;
 
 import es.uma.g6.Cuenta;
 import es.uma.g6.Fintech;
+import es.uma.g6.Transaccion;
 import exceptions.CuentaNoEncontradaException;
+import exceptions.FaltaDeFondosException;
 
 @Stateless
 public class ClienteEJB  implements gestionCliente{
@@ -19,11 +21,12 @@ public class ClienteEJB  implements gestionCliente{
 	private EntityManager em;
 
 	@Override
-	public void transaccion(Cuenta cuentaOrigen, Cuenta cuentaDestino, int cantidad) throws CuentaNoEncontradaException {
-		Cuenta cuO = em.find(Cuenta.class, cuentaOrigen.getIBAN());
-		Cuenta cuD = em.find(Cuenta.class, cuentaDestino.getIBAN());
+	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad) throws CuentaNoEncontradaException, FaltaDeFondosException {
+		Cuenta cuO = em.find(Cuenta.class, cOrigen.getIBAN());
+		Cuenta cuD = em.find(Cuenta.class, cDestino.getIBAN());
 		if(cuO == null) throw new CuentaNoEncontradaException();
 		if(cuD == null) throw new CuentaNoEncontradaException();
+		return null;
 	}
 
 
