@@ -14,13 +14,16 @@ import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
 import exceptions.ClienteNoValidoException;
+import exceptions.ContraseniaIncorrectaException;
 import exceptions.CuentaNoACeroException;
 import exceptions.CuentaNoEncontradaException;
+import exceptions.EmpresaNoPuedeHacerLogin;
 import exceptions.FaltaDeFondosException;
 import exceptions.PooledExistenteException;
 import exceptions.SegregadaExistenteException;
 import exceptions.PooledNoEncontradaException;
 import exceptions.SegregadaNoEncontradaException;
+import exceptions.UsuarioNoActivoException;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -154,23 +157,25 @@ public class AdministradorEJB implements gestionAdministrador{
 		}
 		em.merge(autorizado);
 	}
-	@Override
 	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException {
-		// TODO Auto-generated method stub
-		Usuario u =em.find(Usuario.class, nombre_usuario);
-		if(u==null) throw new UsuarioNoEncontradoException();
-		if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("empresa")) throw new EmpresaNoPuedeHacerLogin();
-		if(u.getContraseña() != contrasenia) throw new ContraseñaIncorrectaException();
-		if(u.getAutorizado()!=null) {
-			if(!u.getAutorizado().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
-		}
-		if(u.getCliente()!=null){
-			if(!u.getCliente().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
-		}
-		
-		return new Usuario(nombre_usuario, contrasenia, u.isAdministrador(), u.getAutorizado(), u.getCliente());
-	}
-	
+        // TODO Auto-generated method stub
+        Usuario u =em.find(Usuario.class, nombre_usuario);
+        if(u==null) throw new UsuarioNoEncontradoException();
+
+        if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("empresa")) throw new EmpresaNoPuedeHacerLogin();
+
+        if(u.getContraseña() != contrasenia) throw new ContraseniaIncorrectaException();
+
+        if(u.getAutorizado()!=null) {
+            if(!u.getAutorizado().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+        }
+
+        if(u.getCliente()!=null){
+            if(!u.getCliente().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+        }
+
+        return new Usuario(nombre_usuario, contrasenia, u.isAdministrador(), u.getAutorizado(), u.getCliente());
+    }
 	
 	@Override
 	public void bloquearCliente(Cliente cliente) throws AdministracionException {
@@ -330,10 +335,6 @@ public class AdministradorEJB implements gestionAdministrador{
 		
 		
 	}
-	
-	
-	
-	
 	
 	
 
