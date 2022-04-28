@@ -71,17 +71,30 @@ public class Autorizacion {
 	private Autorizado autorizado;
 	
 	private String tipo;
+	private boolean bloqueado;
 
 
-	public Autorizacion(Empresa empresa, Autorizado autorizado, String tipo) {
+	
+	public Autorizacion(Empresa empresa, Autorizado autorizado, String tipo, boolean estado) {
 		super();
 		this.empresa = empresa;
 		this.autorizado = autorizado;
 		this.tipo = tipo;
+		this.bloqueado = estado;
 	}
 
 	public Autorizacion() {
 
+	}
+	
+	
+
+	public boolean isBloqueado() {
+		return bloqueado;
+	}
+
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
 	}
 
 	public Empresa getEmpresa() {
@@ -128,9 +141,11 @@ public class Autorizacion {
 
 	@Override
 	public String toString() {
-		return "Autorizacion [empresa=" + empresa + ", autorizado=" + autorizado + ", tipo=" + tipo + "]";
+		return "Autorizacion [empresa=" + empresa + ", autorizado=" + autorizado + ", tipo=" + tipo + ", bloqueado="
+				+ bloqueado + "]";
 	}
 
+	
 	
 	
 	

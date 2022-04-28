@@ -25,8 +25,7 @@ import exceptions.SegregadaNoEncontradaException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class AdministradorEJB implements gestionAdministrador{
 
@@ -171,6 +170,169 @@ public class AdministradorEJB implements gestionAdministrador{
 		
 		return new Usuario(nombre_usuario, contrasenia, u.isAdministrador(), u.getAutorizado(), u.getCliente());
 	}
+	
+	
+	@Override
+	public void bloquearCliente(Cliente cliente) throws AdministracionException {
+		
+		if(!(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) && 
+				(!(cliente.getTipo_Cliente().equalsIgnoreCase("individual")))){
+			
+			throw  new AdministracionException("Tipo no válido");
+		}
+		
+		
+		if(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) {
+			
+			
+			Empresa emp = em.find(Empresa.class,cliente.getIdentificacion() );
+			
+			if(emp==null) {
+				throw  new AdministracionException("Cuenta no encontrada");
+				
+			}else {
+				
+				List<Autorizacion> c = emp.getLista_autorizados();
+				for (Autorizacion aux : c) {
+					
+					aux.setBloqueado(true);
+					boolean encontrado = false;
+					List<Autorizacion> lista=  aux.getAutorizado().getLista_empresas();
+					Iterator<Autorizacion> it = lista.iterator();
+					em.merge(aux);
+					while(encontrado!=true &&  it.hasNext()) {
+						
+						if (it.next().isBloqueado()!=true) {
+						
+						encontrado=true;
+						}
+					
+					}
+				if( encontrado!=true) {
+					
+					aux.getAutorizado().setBloqueado(true);
+					aux.getAutorizado().setEstado("bloqueado");
+					em.merge(aux.getAutorizado());
+				}
+				}
+			}
+			
+		}else {
+			
+			Individual ind = em.find(Individual.class, cliente.getIdentificacion());
+			
+			if(ind==null) {
+				
+				throw  new CuentaNoEncontradaException();
+			}else {
+				
+				ind.setBloqueado(true);
+				ind.setEstado("bloqueado");
+				
+			}
+			
+			em.merge(ind);
+		}
+		
+		
+	}
+	@Override
+	public void bloquearAutorizado(Autorizado autorizado) throws AdministracionException {
+		Autorizado aut= em.find(Autorizado.class, autorizado.getIdentificacion());
+		if(aut==null) {
+			
+			throw new AdministracionException("Cuenta no encontrada");
+		}
+		
+		autorizado.setBloqueado(true);
+		autorizado.setEstado("bloqueado");
+		
+		em.merge(autorizado);	
+	}
+	
+	
+	@Override
+	public void desbloquearAutorizado(Autorizado autorizado) throws AdministracionException {
+		Autorizado aut= em.find(Autorizado.class, autorizado.getIdentificacion());
+		if(aut==null) {
+			
+			throw new AdministracionException("Cuenta no encontrada");
+		}
+		
+		autorizado.setBloqueado(false);
+		autorizado.setEstado("activo");
+		
+		em.merge(autorizado);	
+		
+	}
+	
+	
+	
+	@Override
+	public void desbloquearCliente(Cliente cliente) throws AdministracionException {
+		
+		
+		if(!(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) && 
+				(!(cliente.getTipo_Cliente().equalsIgnoreCase("individual")))){
+			
+			throw  new AdministracionException("Tipo no válido");
+		}
+		
+		
+		if(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) {
+			
+			
+			Empresa emp = em.find(Empresa.class,cliente.getIdentificacion() );
+			
+			if(emp==null) {
+				throw  new AdministracionException("Cuenta no encontrada");
+				
+			}else {
+				
+				List<Autorizacion> c = emp.getLista_autorizados();
+				for (Autorizacion aux : c) {
+					
+					aux.setBloqueado(false);
+					
+					List<Autorizacion> lista=  aux.getAutorizado().getLista_empresas();
+					Iterator<Autorizacion> it = lista.iterator();
+					em.merge(aux);
+					while( it.hasNext()) {
+						
+						it.next().setBloqueado(false); 
+					
+					}
+				
+					
+					aux.getAutorizado().setBloqueado(false);
+					aux.getAutorizado().setEstado("activo");
+					em.merge(aux.getAutorizado());
+				
+				}
+			}
+			
+		}else {
+			
+			Individual ind = em.find(Individual.class, cliente.getIdentificacion());
+			
+			if(ind==null) {
+				
+				throw  new CuentaNoEncontradaException();
+			}else {
+				
+				ind.setBloqueado(false);
+				ind.setEstado("activo");
+				
+			}
+			
+			em.merge(ind);
+		}
+		
+		
+	}
+	
+	
+	
 	
 	
 	

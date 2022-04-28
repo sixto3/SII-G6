@@ -38,6 +38,17 @@ public class Empresa extends Cliente{
 		this.razon_social = razon_social;
 	}
 
+	
+
+
+	public List<Autorizacion> getLista_autorizados() {
+		return lista_autorizados;
+	}
+
+	public void setLista_autorizados(List<Autorizacion> lista_autorizados) {
+		this.lista_autorizados = lista_autorizados;
+	}
+
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
