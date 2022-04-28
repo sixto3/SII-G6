@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,9 +21,11 @@ import ejb.*;
 import es.uma.g6.Autorizacion;
 import es.uma.g6.Autorizado;
 import es.uma.g6.Cliente;
+import es.uma.g6.Pooled;
 import exceptions.AdministracionException;
 import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteNoEncontradoException;
+import exceptions.PooledExistenteException;
 public class ProyectoTests {
 	
 	private static final Logger LOG = Logger.getLogger(ProyectoTests.class.getCanonicalName());
@@ -40,7 +43,7 @@ public class ProyectoTests {
 		gestionCliente = (gestionCliente) SuiteTest.ctx.lookup(CLIENTE_EJB);
 		BaseDeDatos.inicializaBaseDatos(UNIDAD_PERSITENCIA_PRUEBAS);
 	}
-	
+	/*
 	@Test
 	public void testModificarDatosACliente() {
 		final String Tipo_Cliente = "individual";
@@ -117,6 +120,25 @@ public class ProyectoTests {
 		} catch (AdministracionException e) {
 			fail("Debería lanzar excepción de autorizado no encontrado");
 		}
+	}
+	*/
+	@Test
+	public void testAbrirCuentaPooled() {
+		
+		try {
+			
+			
+			Pooled cuentaPooled1 = new Pooled((long)1, (long)1, "abierta", Date.valueOf("2022-04-28"), null, null);
+			
+			try {
+				gestionAdministrador.abrirCuentaPooled(cuentaPooled1);
+			} catch (PooledExistenteException e) {
+				fail("Lanzó excepción al insertar");
+			}
+		} catch (AdministracionException e) {
+			throw new RuntimeException(e);
+		}
+				
 	}
 	
 }

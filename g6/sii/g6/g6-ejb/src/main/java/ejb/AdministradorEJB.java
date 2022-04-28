@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.security.auth.message.config.AuthConfig;
 
 import es.uma.g6.*;
+import es.uma.g6.Autorizacion.AutorizacionId;
 import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
 import exceptions.AutorizadoExistenteException;
@@ -129,11 +130,12 @@ public class AdministradorEJB implements gestionAdministrador{
 	@Override
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente,
 			Autorizacion autorizacion)
-			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException {
+			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException, ClienteNoValidoException {
 		// TODO Auto-generated method stub
-		Autorizacion au = em.find(Autorizacion.class, autorizacion.getId());
-        Cliente cl =em.find(Cliente.class, cliente.getId());
-        Autorizado aut = em.find(Autorizado.class, autorizado.getId());
+		Autorizacion.AutorizacionId auId = new Autorizacion.AutorizacionId(autorizacion.getEmpresa(),autorizacion.getAutorizado());
+		Autorizacion au = em.find(Autorizacion.class, auId);
+        Cliente cl =em.find(Cliente.class, cliente.getIdentificacion());
+        Autorizado aut = em.find(Autorizado.class, autorizado.getIdentificacion());
 
         if(cl == null) throw new ClienteNoEncontradoException();
         if(aut != null) throw new AutorizadoExistenteException();

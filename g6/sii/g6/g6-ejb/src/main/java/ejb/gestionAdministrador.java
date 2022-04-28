@@ -21,7 +21,7 @@ public interface gestionAdministrador {
 	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException;
 	public void bajaCliente(Cliente cliente) throws AdministracionException;
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente, Autorizacion autorizacion)
-			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException;
+			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException,ClienteNoValidoException;
 	public void bajaAutorizado(Autorizado autorizado) throws AdministracionException;
 	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException;
 	public void bloquearCliente(Cliente cliente) throws AdministracionException;

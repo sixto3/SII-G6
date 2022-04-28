@@ -5,9 +5,20 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <persistence-unit name="sii-g6" transaction-type="JTA">
     <jta-data-source>jdbc/sii</jta-data-source>
-    <class>es.uma.informatica.sii.ejb.practica.entidades.Ingrediente</class>
-    <class>es.uma.informatica.sii.ejb.practica.entidades.Lote</class>
-    <class>es.uma.informatica.sii.ejb.practica.entidades.Producto</class>
+    <class>es.uma.g6.Autorizacion</class>
+	<class>es.uma.g6.Autorizado</class>
+	<class>es.uma.g6.Cliente</lass>
+	<class>es.uma.g6.Cuenta</class>
+	<class>es.uma.g6.Depositada_es</class>
+	<class>es.uma.g6.Divisa</class>
+	<class>es.uma.g6.Empresa</class>
+	<class>es.uma.g6.Fintech</class>
+	<class>es.uma.g6.Individual</class>
+	<class>es.uma.g6.Pooled</class>
+	<class>es.uma.g6.Referencia</class>
+	<class>es.uma.g6.Segregada</class>
+	<class>es.uma.g6.Transaccion</class>
+	<class>es.uma.g6.Usuario</class>    
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
     	<property name="javax.persistence.schema-generation.database.action" value="create"/>

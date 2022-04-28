@@ -16,8 +16,10 @@ public class Pooled extends Fintech{
 		super();
 	}
 	
-	
-	
+	public Pooled(Long iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion) {
+		super(iBAN, sWIFT, estado, fechaApertura, fechaCierre, clasificacion);
+	}
+
 	public List<Depositada_en> getDepositada_pooled() {
 		return depositada_pooled;
 	}
