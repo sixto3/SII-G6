@@ -332,17 +332,9 @@ public class AdministradorEJB implements gestionAdministrador{
 			}
 			
 			em.merge(ind);
-		}
-		
-		
+		}	
 	}
-	@Override
-	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad)
-			throws CuentaNoEncontradaException, FaltaDeFondosException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 	
 
 }
