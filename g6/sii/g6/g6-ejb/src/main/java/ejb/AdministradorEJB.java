@@ -96,22 +96,54 @@ public class AdministradorEJB implements gestionAdministrador{
 		em.merge(segregada);
 	}
 
+	public boolean esPersonaJuridica(String cad) {
+        boolean enc = false;
+        cad.toUpperCase();
+        if(cad.compareTo("JURIDICA") ==0) {
+            enc = true;
+        }
+        return enc;
+    }
+	
+	public boolean esPersonaFisica(String cad) {
+        boolean enc = false;
+        cad.toUpperCase();
+        if(cad.compareTo("FISICA") ==0) {
+            enc = true;
+        }
+        return enc;
+    }
+	
 	@Override
 	public void altaCliente(Cliente cliente) throws ClienteExistenteException, ClienteNoValidoException {
 		// TODO Auto-generated method stub
-		
+		 Cliente cl = em.find(Cliente.class, cliente.getIdentificacion());
+	     if(cl != null) throw new ClienteExistenteException();
+
+	     String tipo = cl.getTipo_Cliente();
+
+	     if(!esPersonaJuridica(tipo) || !esPersonaFisica(tipo)) throw new ClienteNoValidoException();
+	     em.persist(cl);
 	}
-
-
-
-
 
 	@Override
 	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente,
 			Autorizacion autorizacion)
 			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException {
 		// TODO Auto-generated method stub
-		
+		Autorizacion au = em.find(Autorizacion.class, autorizacion.getId());
+        Cliente cl =em.find(Cliente.class, cliente.getId());
+        Autorizado aut = em.find(Autorizado.class, autorizado.getId());
+
+        if(cl == null) throw new ClienteNoEncontradoException();
+        if(aut != null) throw new AutorizadoExistenteException();
+        if(au != null) throw new AutorizacionExistenteException();
+
+        String tipo = cl.getTipo_Cliente();
+        if(!esPersonaJuridica(tipo)) throw new ClienteNoValidoException();
+        au.setAutorizado(aut);
+
+        em.persist(au);
 	}
 	
 	private String tipoDeCuenta(Cuenta c){
