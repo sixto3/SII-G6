@@ -110,48 +110,6 @@ public class AdministradorEJB implements gestionAdministrador{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public Transaccion transaccion(Cuenta cOrigen, Cuenta cDestino, float cantidad)
-			throws CuentaNoEncontradaException, FaltaDeFondosException {
-		String tipoOrigen = tipoDeCuenta(cOrigen);
-		String tipoDestino = tipoDeCuenta(cDestino);
-		Transaccion t = new Transaccion();
-	
-		if(tipoOrigen == null)throw new CuentaNoEncontradaException();
-		if(tipoDestino == null)throw new CuentaNoEncontradaException();
-		
-		if(tipoOrigen.equals("Segregada")) {
-			
-			if(tipoDestino.equals("Segregada")) {
-				Segregada cDsg = em.find(Segregada.class, cOrigen.getIBAN());
-				
-				
-			}else if(tipoDestino.equals("Pooled")) {
-				
-			}else {
-				
-			}
-		}else if(tipoOrigen.equals("Pooled")) {
-			if(tipoDestino.equals("Segregada")) {
-				
-			}else if(tipoDestino.equals("Pooled")) {
-				
-			}else {
-				
-			}
-		}else {
-			if(tipoDestino.equals("Segregada")) {
-				
-			}else if(tipoDestino.equals("Pooled")) {
-				
-			}else {
-				
-			}
-		}
-
-		return t;
-	}
 	
 	private String tipoDeCuenta(Cuenta c){
 		String res = "";
