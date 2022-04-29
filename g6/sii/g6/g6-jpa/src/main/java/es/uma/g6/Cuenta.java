@@ -42,6 +42,24 @@ public class Cuenta {
 	public void setSWIFT(Long sWIFT) {
 		SWIFT = sWIFT;
 	}
+	
+	
+
+	public List<Transaccion> getTransacciones_origen() {
+		return transacciones_origen;
+	}
+
+	public void setTransacciones_origen(List<Transaccion> transacciones_origen) {
+		this.transacciones_origen = transacciones_origen;
+	}
+
+	public List<Transaccion> getTransacciones_destino() {
+		return transacciones_destino;
+	}
+
+	public void setTransacciones_destino(List<Transaccion> transacciones_destino) {
+		this.transacciones_destino = transacciones_destino;
+	}
 
 	@Override
 	public String toString() {

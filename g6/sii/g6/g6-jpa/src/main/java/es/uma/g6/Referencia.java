@@ -56,7 +56,19 @@ public class Referencia extends Cuenta {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
+	
+	public Divisa getDivisas() {
+		return divisas;
+	}
+	public void setDivisas(Divisa divisas) {
+		this.divisas = divisas;
+	}
+	public List<Depositada_en> getDepositada_referencia() {
+		return depositada_referencia;
+	}
+	public void setDepositada_referencia(List<Depositada_en> depositada_referencia) {
+		this.depositada_referencia = depositada_referencia;
+	}
 	@Override
 	public String toString() {
 		return "Referencia [nombreBanco=" + nombreBanco + ", sucursal=" + sucursal + ", pais=" + pais + ", saldo="

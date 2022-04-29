@@ -86,6 +86,23 @@ public class Depositada_en {
 	}
 	
 	
+	
+
+	public Referencia getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(Referencia referencia) {
+		this.referencia = referencia;
+	}
+
+	public Pooled getPooled() {
+		return pooled;
+	}
+
+	public void setPooled(Pooled pooled) {
+		this.pooled = pooled;
+	}
 
 	@Override
 	public int hashCode() {
