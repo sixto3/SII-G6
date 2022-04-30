@@ -6,6 +6,9 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -23,13 +26,18 @@ import es.uma.g6.Autorizacion;
 import es.uma.g6.Autorizado;
 import es.uma.g6.Cliente;
 import es.uma.g6.Cuenta;
+import es.uma.g6.Empresa;
 import es.uma.g6.Fintech;
 import es.uma.g6.Pooled;
 import es.uma.g6.Transaccion;
 import es.uma.informatica.sii.anotaciones.Requisitos;
 import exceptions.AdministracionException;
+import exceptions.AutorizacionExistenteException;
+import exceptions.AutorizadoExistenteException;
 import exceptions.AutorizadoNoEncontradoException;
+import exceptions.ClienteExistenteException;
 import exceptions.ClienteNoEncontradoException;
+import exceptions.ClienteNoValidoException;
 import exceptions.CuentaNoEncontradaException;
 import exceptions.FaltaDeFondosException;
 import exceptions.PooledExistenteException;
@@ -185,4 +193,69 @@ public class ProyectoTests {
 			fail("Debería lanzar excepción de falta de fondos");
 		}
 	}
+	
+	//RF6
+	@Test 
+	public void testAutorizadoCuentePersonaJuridica() {
+		try {
+			String entrada = "12/03/2016"; 
+			String entrada2 = "12/03/2017"; 
+			Empresa emp = new Empresa();
+			DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+			Date fecha = null;
+			Date fecha2 = null;
+
+			try {
+				fecha = (Date) format.parse(entrada);
+				fecha2 = (Date) format.parse(entrada2);
+
+			} catch (ParseException e1) {
+				
+				e1.printStackTrace();
+			} 
+			Cliente cl = new Cliente(34,"fisica","activo",fecha, null, "calle pepito perez 4",2390,"casa","casoplon",false);
+			Autorizado au = new Autorizado(2345,"pepe","ramirez","casa pepito",fecha,"activo", fecha,fecha2, false);
+			Autorizacion aut = new Autorizacion(emp,au,"fisica",false);
+			try {
+							gestionAdministrador.anadirAutorizadosCuentaPersonaJuridica(au, cl, aut);
+
+			}catch(ClienteNoEncontradoException | AutorizadoExistenteException | AutorizacionExistenteException|ClienteNoValidoException e) {
+				fail("Lanzo excepcion al añadir autorizado");
+			}
+			
+		}catch(RuntimeException e) {
+			throw new RuntimeException(e);
+			
+		}
+	}
+	
+	//RF2
+	@Test 
+	public void testAltaCliente() {
+		
+		try {
+			String entrada = "12/03/2016"; 
+			DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+			Date fecha = null;
+
+			try {
+				fecha = (Date) format.parse(entrada);
+			} catch (ParseException e1) {
+				
+				e1.printStackTrace();
+			} 
+			Cliente cl = new Cliente(34,"fisica","activo",fecha, null, "calle pepito perez 4",2390,"casa","casoplon",false);
+
+			try {
+				gestionAdministrador.altaCliente(cl);
+			}catch(ClienteExistenteException | ClienteNoValidoException e) {
+				fail("Lanzo excepcion al dar de alta un cliente");
+			}
+			
+		}catch(RuntimeException e) {
+			throw new RuntimeException(e);
+			
+		}
+	}
+	
 }
