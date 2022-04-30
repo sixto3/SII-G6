@@ -148,14 +148,6 @@ public class AdministradorEJB implements gestionAdministrador{
         em.persist(au);
 	}
 	
-	private String tipoDeCuenta(Cuenta c){
-		String res = "";
-		if(em.find(Segregada.class, c.getIBAN()) != null) res = "Segregada";
-		else if(em.find(Pooled.class, c.getIBAN()) != null) res = "Pooled";
-		else if (em.find(Cuenta.class, c.getIBAN()) != null) res = "Externa";
-		else res = null;
-		return res;
-	}
 	@Override
 	public void bajaCliente(Cliente cliente) throws AdministracionException {
 		

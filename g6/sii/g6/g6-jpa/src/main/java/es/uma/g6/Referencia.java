@@ -20,6 +20,26 @@ public class Referencia extends Cuenta {
 	@OneToMany(mappedBy = "referencia")
 	private List<Depositada_en> depositada_referencia;
 	
+	
+	
+	public Referencia() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Referencia(Long iBAN, Long sWIFT, String nombreBanco, String sucursal, String pais, float saldo, Date fechaApertura, String estado,
+			Divisa divisas, List<Depositada_en> depositada_referencia) {
+		super(iBAN, sWIFT);
+		this.nombreBanco = nombreBanco;
+		this.sucursal = sucursal;
+		this.pais = pais;
+		this.saldo = saldo;
+		this.fechaApertura = fechaApertura;
+		this.estado = estado;
+		this.divisas = divisas;
+		this.depositada_referencia = depositada_referencia;
+	}
+	
 	public String getNombreBanco() {
 		return nombreBanco;
 	}

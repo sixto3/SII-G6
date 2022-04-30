@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,11 +22,16 @@ import ejb.*;
 import es.uma.g6.Autorizacion;
 import es.uma.g6.Autorizado;
 import es.uma.g6.Cliente;
+import es.uma.g6.Cuenta;
 import es.uma.g6.Fintech;
 import es.uma.g6.Pooled;
+import es.uma.g6.Transaccion;
+import es.uma.informatica.sii.anotaciones.Requisitos;
 import exceptions.AdministracionException;
 import exceptions.AutorizadoNoEncontradoException;
 import exceptions.ClienteNoEncontradoException;
+import exceptions.CuentaNoEncontradaException;
+import exceptions.FaltaDeFondosException;
 import exceptions.PooledExistenteException;
 public class ProyectoTests {
 	
@@ -44,7 +50,7 @@ public class ProyectoTests {
 		gestionCliente = (gestionCliente) SuiteTest.ctx.lookup(CLIENTE_EJB);
 		BaseDeDatos.inicializaBaseDatos(UNIDAD_PERSITENCIA_PRUEBAS);
 	}
-	/*
+	@Requisitos({"RF3"})
 	@Test
 	public void testModificarDatosACliente() {
 		final String Tipo_Cliente = "individual";
@@ -62,7 +68,7 @@ public class ProyectoTests {
 			fail("No debería lanzar excepción");
 		}
 	}
-	
+	@Requisitos({"RF3"})
 	@Test
 	public void testModificarDatosAClienteNoEncontrado() {
 		final String Tipo_Cliente = "individual";
@@ -82,7 +88,7 @@ public class ProyectoTests {
 			fail("Debería lanzar excepción de cliente no encontrado");
 		}
 	}
-
+	@Requisitos({"RF7"})
 	@Test
 	public void testModificarDatosAAutorizado() {
 		final String nombre = "Juan Manuel";
@@ -101,7 +107,7 @@ public class ProyectoTests {
 			fail("No debería lanzar excepción");
 		}
 	}
-	
+	@Requisitos({"RF7"})
 	@Test
 	public void testModificarDatosAAutorizadoNoEncontrado() {
 		final String nombre = "Juan Manuel";
@@ -122,13 +128,11 @@ public class ProyectoTests {
 			fail("Debería lanzar excepción de autorizado no encontrado");
 		}
 	}
-	*/
+	
+	@Requisitos({"RF5"})
 	@Test
 	public void testAbrirCuentaPooled() {
-		
-		try {
-			
-			
+		try {			
 			Pooled cuentaPooled1 = new Pooled((long)1, (long)1, "abierta", Date.valueOf("2022-04-28"), null, null);
 			
 			try {
@@ -138,10 +142,47 @@ public class ProyectoTests {
 			}
 		} catch (AdministracionException e) {
 			throw new RuntimeException(e);
-		}
-		
-		
-				
+		}			
 	}
 	
+	@Requisitos({"RF14"})
+	@Test
+	public void testTransaccion(){
+		Cuenta cOrigen = new Cuenta((long)2, (long)2);
+		Cuenta cDestino = new Cuenta((long)1,(long)1);
+		
+		try {
+			gestionCliente.transaccion(cOrigen, cDestino, 1500);
+		} catch (AdministracionException e) {
+			fail("No debería lanzar excepción");
+		}
+	}
+	@Requisitos({"RF14"})
+	@Test
+	public void testTransaccionCuentaNoEncontrada(){
+		Cuenta cOrigen = new Cuenta((long)3, (long)3);
+		Cuenta cDestino = new Cuenta((long)1,(long)1);
+		try {
+			gestionCliente.transaccion(cOrigen, cDestino, 1500);
+			fail("Debería lanzar excepción de cuenta no encontrada");
+		} catch (CuentaNoEncontradaException e) {
+			// OK
+		} catch (AdministracionException e) {
+			fail("Debería lanzar excepción de cliente no encontrado");
+		}
+	}
+	@Requisitos({"RF14"})
+	@Test
+	public void testTransaccionFaltaDeFondos(){
+		Cuenta cOrigen = new Cuenta((long)2, (long)2);
+		Cuenta cDestino = new Cuenta((long)1,(long)1);
+		try {
+			gestionCliente.transaccion(cOrigen, cDestino, 4000);
+			fail("Debería lanzar excepción de falta de fondos");
+		} catch (FaltaDeFondosException e) {
+			// OK
+		} catch (AdministracionException e) {
+			fail("Debería lanzar excepción de falta de fondos");
+		}
+	}
 }
