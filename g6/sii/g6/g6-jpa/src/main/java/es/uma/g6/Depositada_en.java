@@ -57,11 +57,11 @@ public class Depositada_en {
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "REFERENCIA",nullable = false)
+	@JoinColumn(name = "REFERENCIA", referencedColumnName = "IBAN")
 	private Referencia referencia;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "CUENTA",nullable = false)
+	@JoinColumn(name = "CUENTA",nullable = false, referencedColumnName = "IBAN")
 	private Pooled pooled;
 
 	@Column(name = "Saldo", nullable = false)

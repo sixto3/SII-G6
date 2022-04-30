@@ -21,6 +21,7 @@ import ejb.*;
 import es.uma.g6.Autorizacion;
 import es.uma.g6.Autorizado;
 import es.uma.g6.Cliente;
+import es.uma.g6.Fintech;
 import es.uma.g6.Pooled;
 import exceptions.AdministracionException;
 import exceptions.AutorizadoNoEncontradoException;
@@ -138,6 +139,8 @@ public class ProyectoTests {
 		} catch (AdministracionException e) {
 			throw new RuntimeException(e);
 		}
+		
+		
 				
 	}
 	

@@ -67,7 +67,7 @@ public class Autorizacion {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "AUTORIZADO_ID", nullable = false)
+	@JoinColumn(name = "AUTORIZADO_ID", nullable = false, referencedColumnName = "usuarioAut")
 	private Autorizado autorizado;
 	
 	private String tipo;
