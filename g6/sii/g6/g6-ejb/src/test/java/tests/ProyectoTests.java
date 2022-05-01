@@ -58,9 +58,9 @@ public class ProyectoTests {
 		gestionCliente = (gestionCliente) SuiteTest.ctx.lookup(CLIENTE_EJB);
 		BaseDeDatos.inicializaBaseDatos(UNIDAD_PERSITENCIA_PRUEBAS);
 	}
-	@Requisitos({"RF3"})
+	//"RF3"
 	@Test
-	public void testModificarDatosACliente() {
+	public void ModificarDatosACliente() {
 		final String Tipo_Cliente = "individual";
 		final String Direccion = "Calle Palangreros nº 3";
 		final int Codigo_Postal = 29640;
@@ -76,9 +76,9 @@ public class ProyectoTests {
 			fail("No debería lanzar excepción");
 		}
 	}
-	@Requisitos({"RF3"})
+	//{"RF3"}
 	@Test
-	public void testModificarDatosAClienteNoEncontrado() {
+	public void ModificarDatosAClienteNoEncontrado() {
 		final String Tipo_Cliente = "individual";
 		final String Direccion = "Calle Palangreros nº 3";
 		final int Codigo_Postal = 29640;
@@ -96,9 +96,9 @@ public class ProyectoTests {
 			fail("Debería lanzar excepción de cliente no encontrado");
 		}
 	}
-	@Requisitos({"RF7"})
+	//{"RF7"}
 	@Test
-	public void testModificarDatosAAutorizado() {
+	public void ModificarDatosAAutorizado() {
 		final String nombre = "Juan Manuel";
 		final String apellido = "García";
 		final String direccion = "Calle Ortega y Gasset nº 54";
@@ -115,9 +115,9 @@ public class ProyectoTests {
 			fail("No debería lanzar excepción");
 		}
 	}
-	@Requisitos({"RF7"})
+	//{"RF7"}
 	@Test
-	public void testModificarDatosAAutorizadoNoEncontrado() {
+	public void ModificarDatosAAutorizadoNoEncontrado() {
 		final String nombre = "Juan Manuel";
 		final String apellido = "García";
 		final String direccion = "Calle Ortega y Gasset nº 54";
@@ -137,7 +137,7 @@ public class ProyectoTests {
 		}
 	}
 	
-	@Requisitos({"RF5"})
+	//{"RF5"}
 	@Test
 	public void testAbrirCuentaPooled() {
 		try {			
@@ -153,9 +153,9 @@ public class ProyectoTests {
 		}			
 	}
 	
-	@Requisitos({"RF14"})
+	//{"RF14"}
 	@Test
-	public void testTransaccion(){
+	public void Transaccion(){
 		Cuenta cOrigen = new Cuenta((long)2, (long)2);
 		Cuenta cDestino = new Cuenta((long)1,(long)1);
 		
@@ -165,9 +165,9 @@ public class ProyectoTests {
 			fail("No debería lanzar excepción");
 		}
 	}
-	@Requisitos({"RF14"})
+	//{"RF14"}
 	@Test
-	public void testTransaccionCuentaNoEncontrada(){
+	public void TransaccionCuentaNoEncontrada(){
 		Cuenta cOrigen = new Cuenta((long)3, (long)3);
 		Cuenta cDestino = new Cuenta((long)1,(long)1);
 		try {
@@ -179,9 +179,9 @@ public class ProyectoTests {
 			fail("Debería lanzar excepción de cliente no encontrado");
 		}
 	}
-	@Requisitos({"RF14"})
+	//{"RF14"}
 	@Test
-	public void testTransaccionFaltaDeFondos(){
+	public void TransaccionFaltaDeFondos(){
 		Cuenta cOrigen = new Cuenta((long)2, (long)2);
 		Cuenta cDestino = new Cuenta((long)1,(long)1);
 		try {
@@ -196,7 +196,7 @@ public class ProyectoTests {
 	
 	//RF6
 	@Test 
-	public void testAutorizadoCuentePersonaJuridica() {
+	public void AutorizadoCuentePersonaJuridica() {
 		try {
 			String entrada = "12/03/2016"; 
 			String entrada2 = "12/03/2017"; 
@@ -231,7 +231,7 @@ public class ProyectoTests {
 	
 	//RF2
 	@Test 
-	public void testAltaCliente() {
+	public void AltaCliente() {
 		
 		try {
 			String entrada = "12/03/2016"; 
