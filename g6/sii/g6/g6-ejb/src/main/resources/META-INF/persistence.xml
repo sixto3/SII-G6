@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <persistence-unit name="sii-g6" transaction-type="JTA">
-    <jta-data-source>jdbc/sii</jta-data-source>
+    <jta-data-source>java:jboss/datasources/sii</jta-data-source>
     <class>es.uma.g6.Autorizacion</class>
 	<class>es.uma.g6.Autorizado</class>
 	<class>es.uma.g6.Cliente</class>
