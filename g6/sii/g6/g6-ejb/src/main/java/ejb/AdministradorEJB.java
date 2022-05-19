@@ -2,6 +2,7 @@ package ejb;
 
 import java.util.logging.Logger;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.security.auth.message.config.AuthConfig;
@@ -31,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.*;
-
+@Stateless
 public class AdministradorEJB implements gestionAdministrador{
 
 	private static final Logger LOG = Logger.getLogger(AdministradorEJB.class.getCanonicalName());
