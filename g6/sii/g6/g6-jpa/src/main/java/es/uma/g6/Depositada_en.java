@@ -1,68 +1,12 @@
 package es.uma.g6;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.*;
 
 @Entity
-@IdClass(Depositada_en.Depositada_enId.class)
 public class Depositada_en {
-	public static class Depositada_enId implements Serializable{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private Referencia referencia;
-		private Pooled pooled;
-		
-		public Depositada_enId() {
-			
-		}
-		public Depositada_enId(Referencia referencia, Pooled pooled) {
-			super();
-			this.referencia = referencia;
-			this.pooled = pooled;
-		}
-		
-		public Referencia getReferencia() {
-			return referencia;
-		}
-		public void setReferencia(Referencia referencia) {
-			this.referencia = referencia;
-		}
-		public Pooled getPooled() {
-			return pooled;
-		}
-		public void setPooled(Pooled pooled) {
-			this.pooled = pooled;
-		}
-		
-		@Override
-		public int hashCode() {
-			return Objects.hash(pooled, referencia);
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Depositada_enId other = (Depositada_enId) obj;
-			return Objects.equals(pooled, other.pooled) && Objects.equals(referencia, other.referencia);
-		}
-	}
 	
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "REFERENCIA", referencedColumnName = "IBAN")
-	private Referencia referencia;
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "CUENTA",nullable = false, referencedColumnName = "IBAN")
-	private Pooled pooled;
+	@EmbeddedId
+	private Depositada_enId id;
 
 	@Column(name = "Saldo", nullable = false)
 	private float saldo;
@@ -89,27 +33,26 @@ public class Depositada_en {
 	
 
 	public Referencia getReferencia() {
-		return referencia;
+		return id.getReferencia();
 	}
 
 	public void setReferencia(Referencia referencia) {
-		this.referencia = referencia;
+		this.id.setReferencia(referencia);
 	}
 
 	public Pooled getPooled() {
-		return pooled;
+		return this.id.getPooled();
 	}
 
 	public void setPooled(Pooled pooled) {
-		this.pooled = pooled;
+		this.id.setPooled(pooled);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((pooled == null) ? 0 : pooled.hashCode());
-		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Float.floatToIntBits(saldo);
 		return result;
 	}
@@ -123,15 +66,10 @@ public class Depositada_en {
 		if (getClass() != obj.getClass())
 			return false;
 		Depositada_en other = (Depositada_en) obj;
-		if (pooled == null) {
-			if (other.pooled != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!pooled.equals(other.pooled))
-			return false;
-		if (referencia == null) {
-			if (other.referencia != null)
-				return false;
-		} else if (!referencia.equals(other.referencia))
+		} else if (!id.equals(other.id))
 			return false;
 		if (Float.floatToIntBits(saldo) != Float.floatToIntBits(other.saldo))
 			return false;
@@ -140,7 +78,9 @@ public class Depositada_en {
 
 	@Override
 	public String toString() {
-		return "Depositada_en [saldo=" + saldo + "]";
+		return "Depositada_en [id=" + id + ", saldo=" + saldo + "]";
 	}
+
+	
 	
 }

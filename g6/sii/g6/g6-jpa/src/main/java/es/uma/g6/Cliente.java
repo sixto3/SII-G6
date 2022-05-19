@@ -2,12 +2,12 @@ package es.uma.g6;
 
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
 
 @Entity
-
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
 
     @Column(name= "Identificacion", unique = true, nullable = false)
@@ -20,8 +20,10 @@ public class Cliente {
     private String Estado;
 
     @Column(name= "Fecha_Alta", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date Fecha_Alta;
 
+    @Temporal(TemporalType.DATE)
     private Date Fecha_Baja;
 
     @Column(name= "Direccion", nullable = false)
@@ -43,11 +45,19 @@ public class Cliente {
     private List<Fintech> cuentas_fintech;
 
     @Id
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "nombre")
     @OneToOne
     private Usuario usuario;
 
-    public Cliente(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
+    public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Cliente(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
                    String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado) {
         Identificacion = identificacion;
         Tipo_Cliente = tipo_Cliente;

@@ -16,10 +16,13 @@ public class Autorizado {
 	private String apellido;
 	@Column(nullable=false)
 	private String direccion;
+	@Temporal(TemporalType.DATE)
 	private Date fecha_nacimiento;
 	@Column(nullable=false)
 	private String estado;
+	@Temporal(TemporalType.DATE)
 	private Date fechaInicio;
+	@Temporal(TemporalType.DATE)
 	private Date fechaFin;
 	@Column(nullable=false)
 	private boolean bloqueado;
@@ -27,13 +30,8 @@ public class Autorizado {
 	private List<Autorizacion> lista_empresas;
 
 	@Id
-	@JoinColumn(name = "ID")
 	@OneToOne
 	private Usuario usuarioAut;
-
-
-	
-
 
 
 	public Autorizado(long identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento,

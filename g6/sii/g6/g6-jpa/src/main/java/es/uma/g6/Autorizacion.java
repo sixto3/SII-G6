@@ -1,74 +1,15 @@
 package es.uma.g6;
 
 
-import java.util.Objects;
-import java.io.Serializable;
+
 import javax.persistence.*;
 @Entity
-@IdClass(Autorizacion.AutorizacionId.class)
 public class Autorizacion {
-	public static class AutorizacionId implements Serializable{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private Empresa empresa;
-		private Autorizado autorizado;
-		
-		public AutorizacionId() {
-			
-		}
-
-		public AutorizacionId(Empresa empresa, Autorizado autorizado) {
-			super();
-			this.empresa = empresa;
-			this.autorizado = autorizado;
-		}
-
-		public Empresa getEmpresa() {
-			return empresa;
-		}
-
-		public void setEmpresa(Empresa empresa) {
-			this.empresa = empresa;
-		}
-
-		public Autorizado getAutorizado() {
-			return autorizado;
-		}
-
-		public void setAutorizado(Autorizado autorizado) {
-			this.autorizado = autorizado;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(autorizado, empresa);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			AutorizacionId other = (AutorizacionId) obj;
-			return Objects.equals(autorizado, other.autorizado) && Objects.equals(empresa, other.empresa);
-		}
-		
-	}
 	
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "EMPRESA_ID",nullable = false)
-	private Empresa empresa;
-
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "AUTORIZADO_ID", nullable = false, referencedColumnName = "usuarioAut")
-	private Autorizado autorizado;
+	
+	
+	@EmbeddedId
+	private AutorizacionId id;
 	
 	private String tipo;
 	private boolean bloqueado;
@@ -77,8 +18,8 @@ public class Autorizacion {
 	
 	public Autorizacion(Empresa empresa, Autorizado autorizado, String tipo, boolean estado) {
 		super();
-		this.empresa = empresa;
-		this.autorizado = autorizado;
+		this.id.empresa = empresa;
+		this.id.autorizado = autorizado;
 		this.tipo = tipo;
 		this.bloqueado = estado;
 	}
@@ -93,24 +34,12 @@ public class Autorizacion {
 		return bloqueado;
 	}
 
-	public void setBloqueado(boolean bloqueado) {
-		this.bloqueado = bloqueado;
+	public AutorizacionId getId() {
+		return id;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	public Autorizado getAutorizado() {
-		return autorizado;
-	}
-
-	public void setAutorizado(Autorizado autorizado) {
-		this.autorizado = autorizado;
+	public void setId(AutorizacionId id) {
+		this.id = id;
 	}
 
 	public String getTipo() {
@@ -121,9 +50,18 @@ public class Autorizacion {
 		this.tipo = tipo;
 	}
 
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(autorizado, empresa, tipo);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (bloqueado ? 1231 : 1237);
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+		return result;
 	}
 
 	@Override
@@ -135,15 +73,29 @@ public class Autorizacion {
 		if (getClass() != obj.getClass())
 			return false;
 		Autorizacion other = (Autorizacion) obj;
-		return Objects.equals(autorizado, other.autorizado) && Objects.equals(empresa, other.empresa)
-				&& Objects.equals(tipo, other.tipo);
+		if (bloqueado != other.bloqueado)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (tipo == null) {
+			if (other.tipo != null)
+				return false;
+		} else if (!tipo.equals(other.tipo))
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Autorizacion [empresa=" + empresa + ", autorizado=" + autorizado + ", tipo=" + tipo + ", bloqueado="
-				+ bloqueado + "]";
+		return "Autorizacion [id=" + id + ", tipo=" + tipo + ", bloqueado=" + bloqueado + "]";
 	}
+
+	
+
+	
 
 	
 	

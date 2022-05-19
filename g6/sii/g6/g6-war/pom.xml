@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.uma</groupId>
-			<artifactId>g6-jpa</artifactId>
+			<artifactId>g6-ejb</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 			<dependency>

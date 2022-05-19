@@ -1,4 +1,4 @@
-package ejb;
+package es.uma.g6.ejb;
 
 import java.util.Calendar;
 import java.util.List;

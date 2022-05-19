@@ -1,4 +1,4 @@
-package ejb;
+package es.uma.g6.ejb;
 
 import es.uma.g6.*;
 import exceptions.AdministracionException;

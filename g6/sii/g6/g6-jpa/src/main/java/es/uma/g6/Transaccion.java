@@ -1,22 +1,23 @@
 package es.uma.g6;
 
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
 @Entity
-public class Transaccion/* implements Serializable*/{
+public class Transaccion{
 
 	@GeneratedValue @Id
 	@Column(name= "Propio")
 	private int id_unq;
 
 	@Column(name="fechaInstruccion", nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date fechaInstruccion;
 	@Column(name="cantidad", nullable = false)
 	private float cantidad;
 
+	@Temporal(TemporalType.DATE)
 	private Date fechaEjecucion;
 	@Column(name="Tipo", nullable=false)
 	private String tipo;//LO PONGO COMO STRING O LO PONEMOS CON NUMEMEROS¿?

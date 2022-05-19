@@ -1,4 +1,4 @@
-package ejb;
+package es.uma.g6.ejb;
 
 import java.util.logging.Logger;
 
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.security.auth.message.config.AuthConfig;
 
 import es.uma.g6.*;
-import es.uma.g6.Autorizacion.AutorizacionId;
+import es.uma.g6.AutorizacionId;
 import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
 import exceptions.AutorizadoExistenteException;
@@ -133,7 +133,7 @@ public class AdministradorEJB implements gestionAdministrador{
 			Autorizacion autorizacion)
 			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException, ClienteNoValidoException {
 		// TODO Auto-generated method stub
-		Autorizacion.AutorizacionId auId = new Autorizacion.AutorizacionId(autorizacion.getEmpresa(),autorizacion.getAutorizado());
+		AutorizacionId auId = new AutorizacionId();
 		Autorizacion au = em.find(Autorizacion.class, auId);
         Cliente cl =em.find(Cliente.class, cliente.getIdentificacion());
         Autorizado aut = em.find(Autorizado.class, autorizado.getIdentificacion());
@@ -144,7 +144,8 @@ public class AdministradorEJB implements gestionAdministrador{
 
         String tipo = cl.getTipo_Cliente();
         if(!esPersonaJuridica(tipo)) throw new ClienteNoValidoException();
-        au.setAutorizado(aut);
+        auId.setEmpresa(cl.getIdentificacion());
+        au.setId(auId);
 
         em.persist(au);
 	}

@@ -21,7 +21,6 @@ import javax.persistence.OneToMany;
 import org.junit.Before;
 import org.junit.Test;
 
-import ejb.*;
 import es.uma.g6.Autorizacion;
 import es.uma.g6.Autorizado;
 import es.uma.g6.Cliente;
@@ -30,6 +29,7 @@ import es.uma.g6.Empresa;
 import es.uma.g6.Fintech;
 import es.uma.g6.Pooled;
 import es.uma.g6.Transaccion;
+import es.uma.g6.ejb.*;
 import es.uma.informatica.sii.anotaciones.Requisitos;
 import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
