@@ -3,35 +3,34 @@ package es.uma.g6;
 
 
 import javax.persistence.*;
+import java.util.Objects;
+
 @Entity
 public class Autorizacion {
-	
-	
-	
+
+
 	@EmbeddedId
 	private AutorizacionId id;
-	
-	private String tipo;
-	private boolean bloqueado;
 
 
-	
-	public Autorizacion(Empresa empresa, Autorizado autorizado, String tipo, boolean estado) {
-		super();
-		this.id.empresa = empresa;
-		this.id.autorizado = autorizado;
-		this.tipo = tipo;
-		this.bloqueado = estado;
+	@ManyToOne
+	@MapsId("autorizado_id") //This is the name of attr in EmployerDeliveryAgentPK class
+	@JoinColumn(name = "AUTORIZADO_ID")
+	private Autorizado autorizado;
+
+	@ManyToOne
+	@MapsId("empresa_id")
+	@JoinColumn(name = "EMPRESA_ID")
+	private Empresa empresa;
+
+	public Autorizacion(AutorizacionId id, Autorizado autorizado, Empresa empresa) {
+		this.id = id;
+		this.autorizado = autorizado;
+		this.empresa = empresa;
 	}
 
 	public Autorizacion() {
 
-	}
-	
-	
-
-	public boolean isBloqueado() {
-		return bloqueado;
 	}
 
 	public AutorizacionId getId() {
@@ -42,65 +41,53 @@ public class Autorizacion {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public Autorizado getAutorizado() {
+		return autorizado;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setAutorizado(Autorizado autorizado) {
+		this.autorizado = autorizado;
 	}
 
-	public void setBloqueado(boolean bloqueado) {
-		this.bloqueado = bloqueado;
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Autorizacion that = (Autorizacion) o;
+		return id.equals(that.id) && autorizado.equals(that.autorizado) && empresa.equals(that.empresa);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (bloqueado ? 1231 : 1237);
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Autorizacion other = (Autorizacion) obj;
-		if (bloqueado != other.bloqueado)
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (tipo == null) {
-			if (other.tipo != null)
-				return false;
-		} else if (!tipo.equals(other.tipo))
-			return false;
-		return true;
+		return Objects.hash(id, autorizado, empresa);
 	}
 
 	@Override
 	public String toString() {
-		return "Autorizacion [id=" + id + ", tipo=" + tipo + ", bloqueado=" + bloqueado + "]";
+		return "Autorizacion{" +
+				"id=" + id +
+				", autorizado=" + autorizado +
+				", empresa=" + empresa +
+				'}';
 	}
-
-	
-
-	
-
-	
-	
-	
-	
-	
-	
 }
+	
+
+	
+
+	
+	
+	
+	
+	
+	
+

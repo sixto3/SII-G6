@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Cuenta {
 
 	@Id @GeneratedValue @Column(nullable = false)
-	private Long IBAN;
+	private String IBAN;
 	private Long SWIFT;
 	
 	@OneToMany (mappedBy = "origen")
@@ -22,16 +22,16 @@ public class Cuenta {
 		super();
 	}
 
-	public Cuenta(Long iBAN, Long sWIFT) {
+	public Cuenta(String iBAN, Long sWIFT) {
 		IBAN = iBAN;
 		SWIFT = sWIFT;
 	}
 
-	public Long getIBAN() {
+	public String getIBAN() {
 		return this.IBAN;
 	}
 
-	public void setIBAN(Long id) {
+	public void setIBAN(String id) {
 		this.IBAN = id;
 	}
 

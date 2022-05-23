@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 @Entity
 public class Referencia extends Cuenta {
+
+
+
 	@Column(nullable = false)
 	private String nombreBanco;
 	private String sucursal;
@@ -17,7 +20,7 @@ public class Referencia extends Cuenta {
 	private String estado;
 	@ManyToOne
 	private Divisa divisas;
-	@OneToMany(mappedBy = "referencia")
+	@OneToMany(mappedBy = "pooled")
 	private List<Depositada_en> depositada_referencia;
 	
 	
@@ -26,9 +29,20 @@ public class Referencia extends Cuenta {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Referencia(Long iBAN, Long sWIFT, String nombreBanco, String sucursal, String pais, float saldo, Date fechaApertura, String estado,
-			Divisa divisas, List<Depositada_en> depositada_referencia) {
+
+	public Referencia(String nombreBanco, String sucursal, String pais,
+					  float saldo, Date fechaApertura, String estado, Divisa divisas) {
+		this.nombreBanco = nombreBanco;
+		this.sucursal = sucursal;
+		this.pais = pais;
+		this.saldo = saldo;
+		this.fechaApertura = fechaApertura;
+		this.estado = estado;
+		this.divisas = divisas;
+	}
+
+	public Referencia(String iBAN, Long sWIFT, String nombreBanco, String sucursal,
+					  String pais, float saldo, Date fechaApertura, String estado, Divisa divisas) {
 		super(iBAN, sWIFT);
 		this.nombreBanco = nombreBanco;
 		this.sucursal = sucursal;
@@ -37,9 +51,8 @@ public class Referencia extends Cuenta {
 		this.fechaApertura = fechaApertura;
 		this.estado = estado;
 		this.divisas = divisas;
-		this.depositada_referencia = depositada_referencia;
 	}
-	
+
 	public String getNombreBanco() {
 		return nombreBanco;
 	}
@@ -88,7 +101,11 @@ public class Referencia extends Cuenta {
 	}
 	public void setDepositada_referencia(List<Depositada_en> depositada_referencia) {
 		this.depositada_referencia = depositada_referencia;
+
 	}
+
+
+
 	@Override
 	public String toString() {
 		return "Referencia [nombreBanco=" + nombreBanco + ", sucursal=" + sucursal + ", pais=" + pais + ", saldo="

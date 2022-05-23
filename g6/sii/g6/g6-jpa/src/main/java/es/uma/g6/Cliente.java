@@ -10,6 +10,11 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
 
+
+    @Id
+    @GeneratedValue
+    private int Id;
+
     @Column(name= "Identificacion", unique = true, nullable = false)
     private int Identificacion;
 
@@ -44,21 +49,13 @@ public class Cliente {
     @OneToMany (mappedBy = "duenio")
     private List<Fintech> cuentas_fintech;
 
-    @Id
-    @JoinColumn(name = "nombre")
     @OneToOne
     private Usuario usuario;
 
-    public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Cliente(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
-                   String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado) {
+    public Cliente(int id, int identificacion, String tipo_Cliente, String estado,
+                   Date fecha_Alta, Date fecha_Baja, String direccion,
+                   int codigo_Postal, String ciudad, String país, boolean bloqueado) {
+        Id = id;
         Identificacion = identificacion;
         Tipo_Cliente = tipo_Cliente;
         Estado = estado;
@@ -74,6 +71,16 @@ public class Cliente {
     public Cliente() {
 
     }
+
+    public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+
 
     public int getIdentificacion() {
         return Identificacion;

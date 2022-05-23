@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 public class Pooled extends Fintech{
 	
-	@OneToMany(mappedBy ="pooled")
+	@OneToMany(mappedBy ="referencia")
 	private List<Depositada_en> depositada_pooled;
 	
 

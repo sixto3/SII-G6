@@ -1,7 +1,9 @@
 package es.uma.g6;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -12,78 +14,49 @@ public class AutorizacionId implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@ManyToOne
-	Empresa empresa;
-	@ManyToOne
-	Autorizado autorizado;
-	
+
+	@Column(name = "EMPLEADO_ID")
+	private int autorizado_id;
+
+	@Column(name = "EMPRESA_ID")
+	private int empresa_id;
+
+
+	public AutorizacionId(int autorizado_id, int empresa_id) {
+		this.autorizado_id = autorizado_id;
+		this.empresa_id = empresa_id;
+	}
+
 	public AutorizacionId() {
 		
 	}
 
-	public AutorizacionId(Empresa empresa, Autorizado autorizado) {
-		super();
-		this.empresa = empresa;
-		this.autorizado = autorizado;
+	public int getAutorizado_id() {
+		return autorizado_id;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public void setAutorizado_id(int autorizado_id) {
+		this.autorizado_id = autorizado_id;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public int getEmpresa_id() {
+		return empresa_id;
 	}
 
-	public Autorizado getAutorizado() {
-		return autorizado;
+	public void setEmpresa_id(int empresa_id) {
+		this.empresa_id = empresa_id;
 	}
 
-	public void setAutorizado(Autorizado autorizado) {
-		this.autorizado = autorizado;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AutorizacionId that = (AutorizacionId) o;
+		return autorizado_id == that.autorizado_id && empresa_id == that.empresa_id;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((autorizado == null) ? 0 : autorizado.hashCode());
-		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
-		return result;
+		return Objects.hash(autorizado_id, empresa_id);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AutorizacionId other = (AutorizacionId) obj;
-		if (autorizado == null) {
-			if (other.autorizado != null)
-				return false;
-		} else if (!autorizado.equals(other.autorizado))
-			return false;
-		if (empresa == null) {
-			if (other.empresa != null)
-				return false;
-		} else if (!empresa.equals(other.empresa))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "AutorizacionId [empresa=" + empresa + ", autorizado=" + autorizado + "]";
-	}
-
-	
-
-	
-
-
-	
 }

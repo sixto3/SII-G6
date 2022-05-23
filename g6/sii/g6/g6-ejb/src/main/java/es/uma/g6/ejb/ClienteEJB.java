@@ -170,7 +170,7 @@ public class ClienteEJB  implements gestionCliente{
 		Depositada_en d = null;
 		int i = 0;
 		for (Depositada_en depositada : lista) {
-			if(depositada.getSaldo() >= cantidad && i==0) {
+			if(depositada.getSaldo()>= cantidad && i==0) {
 				d = depositada;
 				i++;
 			}

@@ -8,6 +8,11 @@ import javax.persistence.*;
 
 @Entity
 public class Autorizado {
+
+	@Id
+	@GeneratedValue
+	private int Id;
+
 	@Column(unique = true)
 	private long identificacion;
 	@Column(nullable=false)
@@ -26,10 +31,11 @@ public class Autorizado {
 	private Date fechaFin;
 	@Column(nullable=false)
 	private boolean bloqueado;
-	@OneToMany(mappedBy = "autorizado")
+
+	@OneToMany(mappedBy = "empresa")
 	private List<Autorizacion> lista_empresas;
 
-	@Id
+
 	@OneToOne
 	private Usuario usuarioAut;
 
