@@ -101,16 +101,16 @@ public class AdministradorEJB implements gestionAdministrador{
 	public boolean esPersonaJuridica(String cad) {
         boolean enc = false;
         cad.toUpperCase();
-        if(cad.compareTo("JURIDICA") ==0) {
+        if(cad.compareTo("Empresa") ==0) {
             enc = true;
         }
         return enc;
     }
-	
+
 	public boolean esPersonaFisica(String cad) {
         boolean enc = false;
         cad.toUpperCase();
-        if(cad.compareTo("FISICA") ==0) {
+        if(cad.compareTo("Individual") ==0) {
             enc = true;
         }
         return enc;
@@ -129,28 +129,32 @@ public class AdministradorEJB implements gestionAdministrador{
 	}
 
 	@Override
-	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente,
-			Autorizacion autorizacion)
+	public void anadirAutorizadosCuentaPersonaJuridica(Autorizado autorizado, Cliente cliente, Autorizacion autorizacion)
 			throws ClienteNoEncontradoException, AutorizadoExistenteException, AutorizacionExistenteException, ClienteNoValidoException {
 		// TODO Auto-generated method stub
-		AutorizacionId auId = new AutorizacionId();
-		Autorizacion au = em.find(Autorizacion.class, auId);
-        Cliente cl =em.find(Cliente.class, cliente.getIdentificacion());
-        Autorizado aut = em.find(Autorizado.class, autorizado.getIdentificacion());
+		// TODO Auto-generated method stub
 
-        if(cl == null) throw new ClienteNoEncontradoException();
-        if(aut != null) throw new AutorizadoExistenteException();
-        if(au != null) throw new AutorizacionExistenteException();
+		if (!(esPersonaJuridica(cliente.getTipo_Cliente()))) {
+			throw new ClienteNoEncontradoException();
+		} else {
 
-        String tipo = cl.getTipo_Cliente();
-        if(!esPersonaJuridica(tipo)) throw new ClienteNoValidoException();
-        auId.setEmpresa(cl.getIdentificacion());
-        au.setId(auId);
+			Empresa emp = em.find(Empresa.class, cliente.getIdentificacion());
+			List<Autorizacion> lista_aut = emp.getLista_autorizados();
+			List<Autorizacion> lista_emp = autorizado.getLista_empresas();
 
-        em.persist(au);
+			autorizacion.setAutorizado(autorizado);
+			autorizacion.setEmpresa(emp);
+
+			lista_aut.add(autorizacion);
+			lista_emp.add(autorizacion);
+
+			em.merge(emp);
+			em.merge(autorizado);
+			em.persist(autorizacion);
+		}
 	}
-	
-	@Override
+
+		@Override
 	public void bajaCliente(Cliente cliente) throws AdministracionException {
 		
 		Cliente c = em.find(Cliente.class, cliente.getIdentificacion());
@@ -160,7 +164,7 @@ public class AdministradorEJB implements gestionAdministrador{
 		}else {
 			
 			cliente.setBloqueado(false);
-			cliente.setEstado("baja");
+			cliente.setEstado("Cerrada");
 			Calendar calendar = Calendar.getInstance();
             java.util.Date currentDate = calendar.getTime();
             java.sql.Date date = new java.sql.Date(currentDate.getTime());
@@ -169,7 +173,9 @@ public class AdministradorEJB implements gestionAdministrador{
 		}
 		em.merge(cliente);
 	}
-	
+
+
+
 	@Override
 	public void bajaAutorizado(Autorizado autorizado) throws AdministracionException {
 		
@@ -182,25 +188,27 @@ public class AdministradorEJB implements gestionAdministrador{
 			autorizado.setBloqueado(false);
 			
 	
-			autorizado.setEstado("baja");
+			autorizado.setEstado("Cerrada");
 		}
 		em.merge(autorizado);
 	}
+
 	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException {
         // TODO Auto-generated method stub
         Usuario u =em.find(Usuario.class, nombre_usuario);
+
         if(u==null) throw new UsuarioNoEncontradoException();
 
-        if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("empresa")) throw new EmpresaNoPuedeHacerLogin();
+        if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("Empresa")) throw new EmpresaNoPuedeHacerLogin();
 
         if(u.getContraseña() != contrasenia) throw new ContraseniaIncorrectaException();
 
         if(u.getAutorizado()!=null) {
-            if(!u.getAutorizado().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+            if(!u.getAutorizado().getEstado().equalsIgnoreCase("Activo")) throw new UsuarioNoActivoException();
         }
 
         if(u.getCliente()!=null){
-            if(!u.getCliente().getEstado().equalsIgnoreCase("activo")) throw new UsuarioNoActivoException();
+            if(!u.getCliente().getEstado().equalsIgnoreCase("Activo")) throw new UsuarioNoActivoException();
         }
 
         return new Usuario(nombre_usuario, contrasenia, u.isAdministrador(), u.getAutorizado(), u.getCliente());
@@ -209,14 +217,14 @@ public class AdministradorEJB implements gestionAdministrador{
 	@Override
 	public void bloquearCliente(Cliente cliente) throws AdministracionException {
 		
-		if(!(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) && 
-				(!(cliente.getTipo_Cliente().equalsIgnoreCase("individual")))){
+		if(!(cliente.getTipo_Cliente().equalsIgnoreCase("Empresa")) &&
+				(!(cliente.getTipo_Cliente().equalsIgnoreCase("Individual")))){
 			
 			throw  new AdministracionException("Tipo no válido");
 		}
 		
 		
-		if(cliente.getTipo_Cliente().equalsIgnoreCase("empresa")) {
+		if(cliente.getTipo_Cliente().equalsIgnoreCase("Empresa")) {
 			
 			
 			Empresa emp = em.find(Empresa.class,cliente.getIdentificacion() );
@@ -229,14 +237,15 @@ public class AdministradorEJB implements gestionAdministrador{
 				List<Autorizacion> c = emp.getLista_autorizados();
 				for (Autorizacion aux : c) {
 					
-					aux.setBloqueado(true);
+					aux.getAutorizado().setBloqueado(true);
+					aux.getAutorizado().setEstado("Bloqueado");
 					boolean encontrado = false;
 					List<Autorizacion> lista=  aux.getAutorizado().getLista_empresas();
 					Iterator<Autorizacion> it = lista.iterator();
 					em.merge(aux);
 					while(encontrado!=true &&  it.hasNext()) {
 						
-						if (it.next().isBloqueado()!=true) {
+						if (it.next().getAutorizado().isBloqueado()!=true) {
 						
 						encontrado=true;
 						}
@@ -245,7 +254,7 @@ public class AdministradorEJB implements gestionAdministrador{
 				if( encontrado!=true) {
 					
 					aux.getAutorizado().setBloqueado(true);
-					aux.getAutorizado().setEstado("bloqueado");
+					aux.getAutorizado().setEstado("Bloqueado");
 					em.merge(aux.getAutorizado());
 				}
 				}
@@ -261,7 +270,7 @@ public class AdministradorEJB implements gestionAdministrador{
 			}else {
 				
 				ind.setBloqueado(true);
-				ind.setEstado("bloqueado");
+				ind.setEstado("Bloqueado");
 				
 			}
 			
@@ -279,7 +288,7 @@ public class AdministradorEJB implements gestionAdministrador{
 		}
 		
 		autorizado.setBloqueado(true);
-		autorizado.setEstado("bloqueado");
+		autorizado.setEstado("Bloqueado");
 		
 		em.merge(autorizado);	
 	}
@@ -326,20 +335,20 @@ public class AdministradorEJB implements gestionAdministrador{
 				List<Autorizacion> c = emp.getLista_autorizados();
 				for (Autorizacion aux : c) {
 					
-					aux.setBloqueado(false);
+					aux.getAutorizado().setBloqueado(false);
 					
 					List<Autorizacion> lista=  aux.getAutorizado().getLista_empresas();
 					Iterator<Autorizacion> it = lista.iterator();
 					em.merge(aux);
 					while( it.hasNext()) {
 						
-						it.next().setBloqueado(false); 
+						it.next().getAutorizado().setBloqueado(false);
 					
 					}
 				
 					
 					aux.getAutorizado().setBloqueado(false);
-					aux.getAutorizado().setEstado("activo");
+					aux.getAutorizado().setEstado("Activo");
 					em.merge(aux.getAutorizado());
 				
 				}
@@ -355,7 +364,7 @@ public class AdministradorEJB implements gestionAdministrador{
 			}else {
 				
 				ind.setBloqueado(false);
-				ind.setEstado("activo");
+				ind.setEstado("Activo");
 				
 			}
 			
