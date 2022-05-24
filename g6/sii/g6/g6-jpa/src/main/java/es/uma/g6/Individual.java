@@ -24,15 +24,19 @@ public class Individual extends Cliente{
 
     private Date Fecha_Nacimiento;
 
-    public Individual(int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja, String direccion, int codigo_Postal,
-                      String ciudad, String país, boolean bloqueado, String nombre, String apellido, Date fecha_Nacimiento) {
-        super(identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion, codigo_Postal, ciudad, país, bloqueado);
-        Nombre = nombre;
-        Apellido = apellido;
-        Fecha_Nacimiento = fecha_Nacimiento;
-    }
+   
 
-    public Individual(String nombre, String apellido, Date fecha_Nacimiento) {
+    public Individual(int id, int identificacion, String tipo_Cliente, String estado, java.util.Date fecha_Alta,
+			java.util.Date fecha_Baja, String direccion, int codigo_Postal, String ciudad, String país,
+			boolean bloqueado, String nombre, String apellido, Date fecha_Nacimiento) {
+		super(id, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion, codigo_Postal, ciudad, país,
+				bloqueado);
+		Nombre = nombre;
+		Apellido = apellido;
+		Fecha_Nacimiento = fecha_Nacimiento;
+	}
+
+	public Individual(String nombre, String apellido, Date fecha_Nacimiento) {
         Nombre = nombre;
         Apellido = apellido;
         Fecha_Nacimiento = fecha_Nacimiento;

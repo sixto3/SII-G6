@@ -22,7 +22,7 @@ public class Fintech extends Cuenta{
 		super();
 	}
 
-	public Fintech(Long iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion) {
+	public Fintech(String iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion) {
 		super(iBAN, sWIFT);		
 		this.estado = estado;
 		this.fechaApertura = fechaApertura;
