@@ -125,6 +125,7 @@ public class AdministradorEJB implements gestionAdministrador{
 	     String tipo = cl.getTipo_Cliente();
 
 	     if(!esPersonaJuridica(tipo) || !esPersonaFisica(tipo)) throw new ClienteNoValidoException();
+
 	     em.persist(cl);
 	}
 
@@ -147,6 +148,9 @@ public class AdministradorEJB implements gestionAdministrador{
 
 			lista_aut.add(autorizacion);
 			lista_emp.add(autorizacion);
+
+			emp.setLista_autorizados(lista_aut);
+			autorizado.setLista_empresas(lista_emp);
 
 			em.merge(emp);
 			em.merge(autorizado);
