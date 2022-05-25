@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Pooled extends Fintech{
 	
 	@OneToMany(mappedBy ="referencia")
-	private List<Depositada_en> depositada_pooled;
+	private List<DepositadaEn> depositada_pooled;
 	
 
 	public Pooled() {
@@ -20,13 +20,13 @@ public class Pooled extends Fintech{
 		super(iBAN, sWIFT, estado, fechaApertura, fechaCierre, clasificacion);
 	}
 
-	public List<Depositada_en> getDepositada_pooled() {
+	public List<DepositadaEn> getDepositada_pooled() {
 		return depositada_pooled;
 	}
 
 
 
-	public void setDepositada_pooled(List<Depositada_en> depositada_pooled) {
+	public void setDepositada_pooled(List<DepositadaEn> depositada_pooled) {
 		this.depositada_pooled = depositada_pooled;
 	}
 

@@ -21,7 +21,7 @@ public class Referencia extends Cuenta {
 	@ManyToOne
 	private Divisa divisas;
 	@OneToMany(mappedBy = "pooled")
-	private List<Depositada_en> depositada_referencia;
+	private List<DepositadaEn> depositada_referencia;
 	
 	
 	
@@ -96,10 +96,10 @@ public class Referencia extends Cuenta {
 	public void setDivisas(Divisa divisas) {
 		this.divisas = divisas;
 	}
-	public List<Depositada_en> getDepositada_referencia() {
+	public List<DepositadaEn> getDepositada_referencia() {
 		return depositada_referencia;
 	}
-	public void setDepositada_referencia(List<Depositada_en> depositada_referencia) {
+	public void setDepositada_referencia(List<DepositadaEn> depositada_referencia) {
 		this.depositada_referencia = depositada_referencia;
 
 	}

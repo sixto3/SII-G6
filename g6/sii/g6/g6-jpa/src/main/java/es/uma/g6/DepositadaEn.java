@@ -6,41 +6,39 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Depositada_en {
+public class DepositadaEn {
 
 
 	@EmbeddedId
-	private Depositada_enId id;
+	private DepositadaEnId id;
 
 	@ManyToOne
 	@MapsId("pooled_iban") //This is the name of attr in EmployerDeliveryAgentPK class
-	@JoinColumn(name = "POOLED_IBAN")
 	private Pooled pooled;
 
 	@ManyToOne
 	@MapsId("referencia_iban")
-	@JoinColumn(name = "REFERENCIA_IBAN")
 	private Referencia referencia;
 
 	private float saldo;
 
-	public Depositada_en(Depositada_enId id, Pooled pooled, Referencia referencia, float saldo) {
+	public DepositadaEn(DepositadaEnId id, Pooled pooled, Referencia referencia, float saldo) {
 		this.id = id;
 		this.pooled = pooled;
 		this.referencia = referencia;
 		this.saldo = saldo;
 	}
 
-	public Depositada_en(){
+	public DepositadaEn(){
 
 
 	}
 
-	public Depositada_enId getId() {
+	public DepositadaEnId getId() {
 		return id;
 	}
 
-	public void setId(Depositada_enId id) {
+	public void setId(DepositadaEnId id) {
 		this.id = id;
 	}
 
@@ -72,7 +70,7 @@ public class Depositada_en {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Depositada_en that = (Depositada_en) o;
+		DepositadaEn that = (DepositadaEn) o;
 		return Float.compare(that.saldo, saldo) == 0 && id.equals(that.id) && pooled.equals(that.pooled) && referencia.equals(that.referencia);
 	}
 

@@ -6,8 +6,8 @@
 		<class>es.uma.g6.Autorizado</class>
 		<class>es.uma.g6.Cliente</class>
 		<class>es.uma.g6.Cuenta</class>
-		<class>es.uma.g6.Depositada_en</class>
-		<class>es.uma.g6.Depositada_enId</class>
+		<class>es.uma.g6.DepositadaEn</class>
+		<class>es.uma.g6.DepositadaEnId</class>
 		<class>es.uma.g6.Divisa</class>
 		<class>es.uma.g6.Empresa</class>
 		<class>es.uma.g6.Fintech</class>

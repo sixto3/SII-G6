@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import com.sun.mail.imap.protocol.ListInfo;
 
 import es.uma.g6.Cuenta;
-import es.uma.g6.Depositada_en;
+import es.uma.g6.DepositadaEn;
 import es.uma.g6.Fintech;
 import es.uma.g6.Pooled;
 import es.uma.g6.Referencia;
@@ -77,7 +77,7 @@ public class ClienteEJB  implements gestionCliente{
 			Pooled cOpl = em.find(Pooled.class, cOrigen.getIBAN());
 			Referencia rDestino = em.find(Referencia.class, cDestino.getIBAN());
 		
-			Depositada_en dep = hayDineroSuficienteEnAlMenosUna(cOpl.getDepositada_pooled(), (int) cantidad);
+			DepositadaEn dep = hayDineroSuficienteEnAlMenosUna(cOpl.getDepositada_pooled(), (int) cantidad);
 			
 			if(dep == null) throw new FaltaDeFondosException();
 			
@@ -166,10 +166,10 @@ public class ClienteEJB  implements gestionCliente{
 		return res;
 	}
 	
-	private Depositada_en hayDineroSuficienteEnAlMenosUna(List<Depositada_en> lista, int cantidad) {
-		Depositada_en d = null;
+	private DepositadaEn hayDineroSuficienteEnAlMenosUna(List<DepositadaEn> lista, int cantidad) {
+		DepositadaEn d = null;
 		int i = 0;
-		for (Depositada_en depositada : lista) {
+		for (DepositadaEn depositada : lista) {
 			if(depositada.getSaldo()>= cantidad && i==0) {
 				d = depositada;
 				i++;

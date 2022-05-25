@@ -15,10 +15,8 @@ public class AutorizacionId implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "EMPLEADO_ID")
 	private int autorizado_id;
 
-	@Column(name = "EMPRESA_ID")
 	private int empresa_id;
 
 

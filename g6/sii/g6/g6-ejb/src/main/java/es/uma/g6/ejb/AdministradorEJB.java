@@ -74,9 +74,9 @@ public class AdministradorEJB implements gestionAdministrador{
 		// TODO Auto-generated method stub
 		Pooled pool = em.find(Pooled.class, pooled.getIBAN());
 		if(pool == null) throw new PooledNoEncontradaException();
-		List<Depositada_en> list = pooled.getDepositada_pooled();
+		List<DepositadaEn> list = pooled.getDepositada_pooled();
 		double saldo=0;
-		for(Depositada_en cuenta : list) {
+		for(DepositadaEn cuenta : list) {
 			saldo+=cuenta.getSaldo();
 		}
 		if(saldo != 0) throw new CuentaNoACeroException();

@@ -7,28 +7,26 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
-import es.uma.g6.Depositada_enId;
+import es.uma.g6.DepositadaEnId;
 @Embeddable
-public class Depositada_enId implements Serializable{
+public class DepositadaEnId implements Serializable{
 	
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
-	@Column(name = "POOLED_IBAN")
 	private String pooled_iban;
 
-	@Column(name = "REFERENCIA_IBAN")
 	private int referencia_iban;
 
 
 
-	public Depositada_enId() {
+	public DepositadaEnId() {
 			
 		}
 
-	public Depositada_enId(String pooled_iban, int referencia_iban) {
+	public DepositadaEnId(String pooled_iban, int referencia_iban) {
 		this.pooled_iban = pooled_iban;
 		this.referencia_iban = referencia_iban;
 	}
@@ -53,7 +51,7 @@ public class Depositada_enId implements Serializable{
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Depositada_enId that = (Depositada_enId) o;
+		DepositadaEnId that = (DepositadaEnId) o;
 		return referencia_iban == that.referencia_iban && pooled_iban.equals(that.pooled_iban);
 	}
 

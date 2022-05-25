@@ -15,12 +15,10 @@ public class Autorizacion {
 
 	@ManyToOne
 	@MapsId("autorizado_id") //This is the name of attr in EmployerDeliveryAgentPK class
-	@JoinColumn(name = "AUTORIZADO_ID")
 	private Autorizado autorizado;
 
 	@ManyToOne
 	@MapsId("empresa_id")
-	@JoinColumn(name = "EMPRESA_ID")
 	private Empresa empresa;
 
 	public Autorizacion(AutorizacionId id, Autorizado autorizado, Empresa empresa) {
