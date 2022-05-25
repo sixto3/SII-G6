@@ -13,7 +13,7 @@ public class Empresa extends Cliente{
 	@Column(nullable=false)
 	private String razon_social;
 	
-	@OneToMany (mappedBy = "autorizado")
+	@OneToMany (mappedBy = "empresa")
 	private List<Autorizacion> lista_autorizados;
 
 

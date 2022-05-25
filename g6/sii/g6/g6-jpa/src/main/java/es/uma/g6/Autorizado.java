@@ -32,7 +32,7 @@ public class Autorizado {
 	@Column(nullable=false)
 	private boolean bloqueado;
 
-	@OneToMany(mappedBy = "empresa")
+	@OneToMany(mappedBy = "autorizado")
 	private List<Autorizacion> lista_empresas;
 
 
@@ -108,6 +108,22 @@ public class Autorizado {
 	}
 
 	
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public Usuario getUsuarioAut() {
+		return usuarioAut;
+	}
+
+	public void setUsuarioAut(Usuario usuarioAut) {
+		this.usuarioAut = usuarioAut;
+	}
 
 	public Date getFechaInicio() {
 		return fechaInicio;
