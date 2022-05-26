@@ -23,5 +23,7 @@
 		<module>g6-jpa</module>
 		<module>g6-ejb</module>
 		<module>g6-war</module>
+		<module>g6-ear</module>
+		<module>g6-tests</module>
   </modules>
 </project>

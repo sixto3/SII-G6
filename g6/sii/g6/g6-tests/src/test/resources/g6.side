@@ -1,0 +1,59 @@
+{
+  "id": "e8e1c379-62cf-48e2-9613-80e3ef613cb7",
+  "version": "2.0",
+  "name": "g6",
+  "url": "http://localhost:8080/g6-war",
+  "tests": [{
+    "id": "df7e4545-77bc-4363-a657-ec0bd1ba66eb",
+    "name": "inicio",
+    "commands": [{
+      "id": "1dcc5c26-d0a4-4a24-9c0c-12d5942b725e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/g6-war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8295119e-2134-4cb7-90d7-821f9e3d15a8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1366x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3be69538-5df6-451b-b6d2-658c75fa44cd",
+      "comment": "",
+      "command": "click",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Hola mundo')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7eb8c030-f818-4cbd-95fd-0f229e5c5a2b",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=saludo",
+      "targets": [
+        ["id=saludo", "id"],
+        ["css=#saludo", "css:finder"],
+        ["xpath=//span[@id='saludo']", "xpath:attributes"],
+        ["xpath=//span", "xpath:position"],
+        ["xpath=//span[contains(.,'Hola mundo')]", "xpath:innerText"]
+      ],
+      "value": "Hola mundo"
+    }]
+  }],
+  "suites": [{
+    "id": "243bb34b-401f-421f-ae7a-0ef64a754e47",
+    "name": "g6IT",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["df7e4545-77bc-4363-a657-ec0bd1ba66eb"]
+  }],
+  "urls": ["http://localhost:8080/g6-war"],
+  "plugins": []
+}
