@@ -18,7 +18,7 @@ public class DepositadaEnId implements Serializable{
 
 	private String pooled_iban;
 
-	private int referencia_iban;
+	private String referencia_iban;
 
 
 
@@ -26,7 +26,7 @@ public class DepositadaEnId implements Serializable{
 			
 		}
 
-	public DepositadaEnId(String pooled_iban, int referencia_iban) {
+	public DepositadaEnId(String pooled_iban, String referencia_iban) {
 		this.pooled_iban = pooled_iban;
 		this.referencia_iban = referencia_iban;
 	}
@@ -39,26 +39,47 @@ public class DepositadaEnId implements Serializable{
 		this.pooled_iban = pooled_iban;
 	}
 
-	public int getReferencia_iban() {
+	public String getReferencia_iban() {
 		return referencia_iban;
 	}
 
-	public void setReferencia_iban(int referencia_iban) {
+	public void setReferencia_iban(String referencia_iban) {
 		this.referencia_iban = referencia_iban;
 	}
 
+	
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		DepositadaEnId that = (DepositadaEnId) o;
-		return referencia_iban == that.referencia_iban && pooled_iban.equals(that.pooled_iban);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pooled_iban == null) ? 0 : pooled_iban.hashCode());
+		result = prime * result + ((referencia_iban == null) ? 0 : referencia_iban.hashCode());
+		return result;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(pooled_iban, referencia_iban);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DepositadaEnId other = (DepositadaEnId) obj;
+		if (pooled_iban == null) {
+			if (other.pooled_iban != null)
+				return false;
+		} else if (!pooled_iban.equals(other.pooled_iban))
+			return false;
+		if (referencia_iban == null) {
+			if (other.referencia_iban != null)
+				return false;
+		} else if (!referencia_iban.equals(other.referencia_iban))
+			return false;
+		return true;
 	}
+
+
 
 	@Override
 	public String toString() {
