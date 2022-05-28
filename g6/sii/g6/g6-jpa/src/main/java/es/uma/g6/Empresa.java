@@ -17,7 +17,7 @@ public class Empresa extends Cliente{
 	private List<Autorizacion> lista_autorizados;
 
 
-		public Empresa(int id, int identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
+		public Empresa(int id, String identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
 					   String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado, String razon_social) {
 			super(id, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion,
 					codigo_Postal, ciudad, país, bloqueado);

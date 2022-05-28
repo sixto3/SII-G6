@@ -14,7 +14,7 @@ public class Usuario {
     private String Nombre;
 
     @Column(name = "Contrasenia", nullable = false)
-    private int Contraseña;
+    private String Contraseña;
 
     @Column(name = "Administrador", nullable = false)
     private boolean Administrador;
@@ -26,7 +26,7 @@ public class Usuario {
     private Cliente cliente;
 
 
-    public Usuario(String nombre, int contraseña, boolean administrador, Autorizado autorizado, Cliente cliente) {
+    public Usuario(String nombre, String contraseña, boolean administrador, Autorizado autorizado, Cliente cliente) {
 		super();
 		Nombre = nombre;
 		Contraseña = contraseña;
@@ -49,11 +49,11 @@ public class Usuario {
         Nombre = nombre;
     }
 
-    public int getContraseña() {
+    public String getContraseña() {
         return Contraseña;
     }
 
-    public void setContraseña(int contraseña) {
+    public void setContraseña(String contraseña) {
         Contraseña = contraseña;
     }
 

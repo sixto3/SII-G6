@@ -17,10 +17,10 @@ public class AutorizacionId implements Serializable{
 
 	private int autorizado_id;
 
-	private int empresa_id;
+	private String empresa_id;
 
 
-	public AutorizacionId(int autorizado_id, int empresa_id) {
+	public AutorizacionId(int autorizado_id, String empresa_id) {
 		this.autorizado_id = autorizado_id;
 		this.empresa_id = empresa_id;
 	}
@@ -37,11 +37,11 @@ public class AutorizacionId implements Serializable{
 		this.autorizado_id = autorizado_id;
 	}
 
-	public int getEmpresa_id() {
+	public String getEmpresa_id() {
 		return empresa_id;
 	}
 
-	public void setEmpresa_id(int empresa_id) {
+	public void setEmpresa_id(String empresa_id) {
 		this.empresa_id = empresa_id;
 	}
 

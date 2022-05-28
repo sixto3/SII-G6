@@ -16,7 +16,7 @@ public class Cliente {
     private int Id;
 
     @Column(name= "Identificacion", unique = true, nullable = false)
-    private int Identificacion;
+    private String Identificacion;
 
     @Column(name= "Tipo_Cliente", nullable = false)
     private String Tipo_Cliente;
@@ -52,7 +52,7 @@ public class Cliente {
     @OneToOne
     private Usuario usuario;
 
-    public Cliente(int id, int identificacion, String tipo_Cliente, String estado,
+    public Cliente(int id, String identificacion, String tipo_Cliente, String estado,
                    Date fecha_Alta, Date fecha_Baja, String direccion,
                    int codigo_Postal, String ciudad, String país, boolean bloqueado) {
         Id = id;
@@ -82,11 +82,11 @@ public class Cliente {
 
 
 
-    public int getIdentificacion() {
+    public String getIdentificacion() {
         return Identificacion;
     }
 
-    public void setIdentificacion(int identificacion) {
+    public void setIdentificacion(String identificacion) {
         Identificacion = identificacion;
     }
 
@@ -170,22 +170,34 @@ public class Cliente {
         this.cuentas_fintech = cuentas_fintech;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Cliente cliente = (Cliente) o;
-
-        return Identificacion == cliente.Identificacion;
-    }
+   
 
     @Override
-    public int hashCode() {
-        return Identificacion;
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Identificacion == null) ? 0 : Identificacion.hashCode());
+		return result;
+	}
 
-    @Override
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (Identificacion == null) {
+			if (other.Identificacion != null)
+				return false;
+		} else if (!Identificacion.equals(other.Identificacion))
+			return false;
+		return true;
+	}
+
+	@Override
     public String toString() {
         return "Cliente{" +
                 "Identificacion=" + Identificacion +

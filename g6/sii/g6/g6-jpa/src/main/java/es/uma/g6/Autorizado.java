@@ -14,7 +14,7 @@ public class Autorizado {
 	private int Id;
 
 	@Column(unique = true)
-	private long identificacion;
+	private String identificacion;
 	@Column(nullable=false)
 	private String nombre;
 	@Column(nullable=false)
@@ -40,7 +40,7 @@ public class Autorizado {
 	private Usuario usuarioAut;
 
 
-	public Autorizado(long identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento,
+	public Autorizado(String identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento,
 			String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
 		this.identificacion = identificacion;
 		this.nombre = nombre;
@@ -67,11 +67,11 @@ public class Autorizado {
 		this.estado = estado;
 	}
 
-	public long getIdentificacion() {
+	public String getIdentificacion() {
 		return identificacion;
 	}
 
-	public void setIdentificacion(long identificacion) {
+	public void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
 	}
 
@@ -157,19 +157,31 @@ public class Autorizado {
 		this.lista_empresas = lista_empresas;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Autorizado that = (Autorizado) o;
-
-		return identificacion == that.identificacion;
-	}
+	
 
 	@Override
 	public int hashCode() {
-		return (int) (identificacion ^ (identificacion >>> 32));
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((identificacion == null) ? 0 : identificacion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Autorizado other = (Autorizado) obj;
+		if (identificacion == null) {
+			if (other.identificacion != null)
+				return false;
+		} else if (!identificacion.equals(other.identificacion))
+			return false;
+		return true;
 	}
 
 	@Override

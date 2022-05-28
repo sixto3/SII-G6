@@ -22,18 +22,29 @@ public class Fintech extends Cuenta{
 		super();
 	}
 
-	public Fintech(String iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion) {
+	public Fintech(String iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion, Cliente duenio) {
 		super(iBAN, sWIFT);		
 		this.estado = estado;
 		this.fechaApertura = fechaApertura;
 		this.fechaCierre = fechaCierre;
 		this.clasificacion = clasificacion;
+		this.duenio = duenio;
 	}
 
 
 
 	public String getEstado() {
 		return estado;
+	}
+	
+	
+
+	public Cliente getDuenio() {
+		return duenio;
+	}
+
+	public void setDuenio(Cliente duenio) {
+		this.duenio = duenio;
 	}
 
 	public void setEstado(String estado) {

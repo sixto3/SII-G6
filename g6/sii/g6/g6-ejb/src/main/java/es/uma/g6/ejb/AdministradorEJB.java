@@ -197,7 +197,7 @@ public class AdministradorEJB implements gestionAdministrador{
 		em.merge(autorizado);
 	}
 
-	public Usuario login(String nombre_usuario, int contrasenia) throws AdministracionException {
+	public Usuario login(String nombre_usuario, String contrasenia) throws AdministracionException {
         // TODO Auto-generated method stub
         Usuario u =em.find(Usuario.class, nombre_usuario);
 
@@ -205,7 +205,7 @@ public class AdministradorEJB implements gestionAdministrador{
 
         if(u.getCliente().getTipo_Cliente().equalsIgnoreCase("Empresa")) throw new EmpresaNoPuedeHacerLogin();
 
-        if(u.getContraseña() != contrasenia) throw new ContraseniaIncorrectaException();
+        if(u.getContraseña().equals(contrasenia)) throw new ContraseniaIncorrectaException();
 
         if(u.getAutorizado()!=null) {
             if(!u.getAutorizado().getEstado().equalsIgnoreCase("Activo")) throw new UsuarioNoActivoException();

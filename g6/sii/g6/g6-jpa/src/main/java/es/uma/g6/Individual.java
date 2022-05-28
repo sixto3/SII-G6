@@ -26,7 +26,7 @@ public class Individual extends Cliente{
 
    
 
-    public Individual(int id, int identificacion, String tipo_Cliente, String estado, java.util.Date fecha_Alta,
+    public Individual(int id, String identificacion, String tipo_Cliente, String estado, java.util.Date fecha_Alta,
 			java.util.Date fecha_Baja, String direccion, int codigo_Postal, String ciudad, String país,
 			boolean bloqueado, String nombre, String apellido, Date fecha_Nacimiento) {
 		super(id, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion, codigo_Postal, ciudad, país,

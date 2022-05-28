@@ -54,8 +54,8 @@ public class ServicioRest {
 	
 	public Response getCustomers(Cliente cliente) {
 		
-		query = em.createQuery("select I.IBAN ............ from  ...left join");
-		
+		//query = em.createQuery("select I.IBAN ............ from  ...left join");
+		return Response.ok("OK").build();   
 }
 	}
 

@@ -14,8 +14,8 @@ public class Segregada extends Fintech{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Segregada(String iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion, double comision, Referencia ref) {
-		super(iBAN, sWIFT, estado, fechaApertura, fechaCierre, clasificacion);
+	public Segregada(String iBAN, Long sWIFT, String estado, Date fechaApertura, Date fechaCierre, String clasificacion, double comision, Referencia ref, Cliente duenio) {
+		super(iBAN, sWIFT, estado, fechaApertura, fechaCierre, clasificacion, duenio);
 		this.comision = comision;
 		this.ref = ref;
 		// TODO Auto-generated constructor stub
