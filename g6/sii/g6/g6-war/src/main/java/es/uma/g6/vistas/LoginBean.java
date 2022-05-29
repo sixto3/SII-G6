@@ -21,7 +21,7 @@ public class LoginBean {
 
     @Inject
     private InfoSesion sesion;
-
+    @Inject
     private Usuario usuario;
 
     /**
