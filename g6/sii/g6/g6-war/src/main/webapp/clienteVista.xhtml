@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Transacciones</title>
+    </h:head>
+    <h:body>
+        <p>Complete los campos para realizar la transaccion</p>
+        <tr>
+            <td><h:inputText id="ibanOrigen" value="#{clienteBean.cuenta1.ibanOrigen}" required="true"/></td>
+            <td><h:inputText id="ibanDestino" value="#{clienteBean.cuenta2.ibanDestino}" required="true"/></td>
+            <td><h:inputText id="swiftOrigen" value="#{clienteBean.cuenta1.swiftOrigen}" required="true"/></td>
+            <td><h:inputText id="swiftDestino" value="#{clienteBean.cuenta2.swiftDestino}" required="true"/></td>
+            <td><h:inputNumber id="Cantidad" value="#clienteBean.cantidad}" step="0.001" required="true"/></td>
+            <td><h:commandButton id="Realizar" action="#{clienteBean.transaccion}" value="Transaccion"/></td>
+
+        </tr>
+    </h:body>
+
+</html>

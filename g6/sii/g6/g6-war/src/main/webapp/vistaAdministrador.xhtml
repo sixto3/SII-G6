@@ -9,7 +9,7 @@
 
 <h:body>
 
-<h:form id="entradaClientes">
+<h:form id="entradaClientes" var="c">
 
 <table>
     <thead>
@@ -26,18 +26,18 @@
             </tr>
     </thead>
     <tr>
-        <td><h:inputText id="nombre" value="#{AdministradorBean.clienteClass.nombre}" required="true"/></td>
-        <td><h:inputText id="tipo" value="#{AdministradorBean.clienteClass.tipo}" required="true"/></td>
-        <td><h:inputText id="estado" value="#{AdministradorBean.clienteClass.estado}" required="true"/></td>
-        <td><h:inputDate id="fecha_alta" value="#{AdministradorBean.clienteClass.fecha_alta}" required="true"/></td>
-        <td><h:inputDate id="fecha_baja" value="#{AdministradorBean.clienteClass.fecha_baja}" required="true"/></td>
-        <td><h:inputText id="direccion" value="#{AdministradorBean.clienteClass.direccion}" required="true"/></td>
-        <td><h:inputText id="ciudad" value="#{AdministradorBean.clienteClass.ciudad}" required="true"/></td>
-        <td><h:inputText id="codigo_postal" value="#{AdministradorBean.clienteClass.codigo_postal}" required="true"/></td>
-        <td><h:inputText id="pais" value="#{AdministradorBean.clienteClass.pais}" required="true"/></td>
-        <td><h:inputBoolean id="Administrador" value="#{AdministradorBean.clienteClass.Administrador}" required="true"/></td>
+        <td><h:inputText id="nombre" value="#{AdministradorBean.cl.nombre}" required="true"/></td>
+        <td><h:inputText id="tipo" value="#{AdministradorBean.cl.tipo}" required="true"/></td>
+        <td><h:inputText id="estado" value="#{AdministradorBean.cl.estado}" required="true"/></td>
+        <td><h:inputDate id="fecha_alta" value="#{AdministradorBean.cl.fecha_alta}" required="true"/></td>
+        <td><h:inputDate id="fecha_baja" value="#{AdministradorBean.cl.fecha_baja}" required="true"/></td>
+        <td><h:inputText id="direccion" value="#{AdministradorBean.cl.direccion}" required="true"/></td>
+        <td><h:inputText id="ciudad" value="#{AdministradorBean.cl.ciudad}" required="true"/></td>
+        <td><h:inputText id="codigo_postal" value="#{AdministradorBean.cl.codigo_postal}" required="true"/></td>
+        <td><h:inputText id="pais" value="#{AdministradorBean.cl.pais}" required="true"/></td>
+        <td><h:inputBoolean id="Administrador" value="#{AdministradorBean.cl.Administrador}" required="true"/></td>
 
-        <td><h:commandButton id="botonAniadir" action="#{AdministradorBean.aniadirContacto}" value="Añadir"/></td>
+        <td><h:commandButton id="botonAniadir" action="#{AdministradorBean.aniadirCliente}" value="Añadir"/></td>
 
     </tr>
 </table>
@@ -119,11 +119,14 @@
     </h:column>
 
     <h:column>
-		<h:commandButton id="eliminar" action="#{administradorBean.eliminar(c)}" value="Eliminar"/>
+		<h:commandButton id="eliminar" action="#{administradorBean.eliminarCliente(c)}" value="Eliminar"/>
 	</h:column>
 </h:dateTable>
 </h:form>
 
+<p>Desbloquear un usuario</p>
+<h:inputText id="identificador" value="#{administradorBean.cliente.nombre}" required="true" />
+<h:commandButton id="Aceptar" action="#{administradorBean.desbloquearCliente}" value="Desbloquear"/>
 
 <h:form id="selector">
 	<h:selectOneMenu id="menuSeleccion" value="#{AdministradorBean.clienteElegido}">
