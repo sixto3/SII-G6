@@ -1,7 +1,10 @@
+package es.uma.g6.vistas;
 import javax.inject.Inject;
 
 import es.uma.g6.ejb.gestionAdministrador;
 import es.uma.g6.ejb.gestionCliente;
+import exceptions.CuentaNoEncontradaException;
+import exceptions.FaltaDeFondosException;
 import es.uma.g6.*;
 
 public class clienteBean {
@@ -64,7 +67,7 @@ public class clienteBean {
         this.cantidad=cantidad;
     }
 
-    public String transaccion(String cuentaOrigen,String cuentaDestino, float cantidad){
+    public String transaccion(String cuentaOrigen,String cuentaDestino, float cantidad) throws CuentaNoEncontradaException, FaltaDeFondosException{
         gc.transaccion(cuenta1,cuenta2,cantidad);
         return "clienteVista.xhtml";
     }

@@ -1,6 +1,7 @@
-es\uma\g6\vistas\UsuarioClass.class
-es\uma\g6\vistas\clienteClass.class
 es\uma\g6\backing\ApplicationConfig.class
 es\uma\g6\backing\ServicioRest.class
 es\uma\g6\vistas\AdministradorBean.class
+es\uma\g6\vistas\InfoSesion.class
+es\uma\g6\vistas\UsuarioClass.class
+es\uma\g6\vistas\clienteClass.class
 es\uma\g6\vistas\LoginBean.class

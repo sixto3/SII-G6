@@ -25,6 +25,7 @@ es\uma\g6\ejb\gestionAdministrador.class
 exceptions\AutorizadoNoEncontradoException.class
 exceptions\PooledExistenteException.class
 es\uma\g6\ejb\InicializaBBDD.class
+exceptions\CuentaRepetidaException.class
 es\uma\g6\Auxiliares\products2.class
 exceptions\AutorizacionExistenteException.class
 es\uma\g6\ejb\gestionCliente.class
