@@ -17,10 +17,10 @@ public class AutorizacionId implements Serializable{
 
 	private int autorizado_id;
 
-	private String empresa_id;
+	private int empresa_id;
 
 
-	public AutorizacionId(int autorizado_id, String empresa_id) {
+	public AutorizacionId(int autorizado_id, int empresa_id) {
 		this.autorizado_id = autorizado_id;
 		this.empresa_id = empresa_id;
 	}
@@ -37,24 +37,38 @@ public class AutorizacionId implements Serializable{
 		this.autorizado_id = autorizado_id;
 	}
 
-	public String getEmpresa_id() {
+	public int getEmpresa_id() {
 		return empresa_id;
 	}
 
-	public void setEmpresa_id(String empresa_id) {
+	public void setEmpresa_id(int empresa_id) {
 		this.empresa_id = empresa_id;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		AutorizacionId that = (AutorizacionId) o;
-		return autorizado_id == that.autorizado_id && empresa_id == that.empresa_id;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + autorizado_id;
+		result = prime * result + empresa_id;
+		return result;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(autorizado_id, empresa_id);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AutorizacionId other = (AutorizacionId) obj;
+		if (autorizado_id != other.autorizado_id)
+			return false;
+		if (empresa_id != other.empresa_id)
+			return false;
+		return true;
 	}
+
+	
 }

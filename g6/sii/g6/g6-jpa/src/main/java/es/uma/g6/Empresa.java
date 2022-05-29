@@ -32,7 +32,6 @@ public class Empresa extends Cliente{
 
 		}
 
-
 		public String getRazon_social() {
 			return razon_social;
 		}

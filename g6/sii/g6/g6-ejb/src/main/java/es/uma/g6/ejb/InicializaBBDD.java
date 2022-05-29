@@ -46,7 +46,7 @@ public class InicializaBBDD {
 		Autorizado autorizado = new Autorizado("Y4001267V", "ana", "sánchez", "Calle autorizado",
 				Date.valueOf("1947-03-26"),"activa", Date.valueOf("2007-08-03"), 
 				Date.valueOf("2027-08-03"), false);
-		AutorizacionId aID = new AutorizacionId(autorizado.getId(), empresa.getIdentificacion());
+		AutorizacionId aID = new AutorizacionId(autorizado.getId(), empresa.getId());
 		Autorizacion autorizacion = new Autorizacion(aID, autorizado, empresa);
 		
 		Usuario usuario2 = new Usuario(autorizado.getNombre(), "ana", false, autorizado, null);

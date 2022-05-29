@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * @author Juan Ignacio
+ *
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
@@ -79,10 +83,19 @@ public class Cliente {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	
 
 
+    public int getId() {
+		return Id;
+	}
 
-    public String getIdentificacion() {
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public String getIdentificacion() {
         return Identificacion;
     }
 
