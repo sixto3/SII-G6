@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:h="https://java.sun.com/jsf/html">
+<h:head>
+	<title>vista Administrador</title>
+    <meta charset="UTF-8"/>
+</h:head>
+
+<h:body>
+
+<h:form id="entradaClientes">
+
+<table>
+    <thead>
+        <tr><th>nombre</th>
+            <th>tipo</th>
+            <th>estado</th>
+            <th>fecha_alta</th>
+            <th>fecha_baja</th>
+            <th>direccion</th>
+            <th>ciudad</th>
+            <th>codigo_postal</th>
+            <th>pais</th>
+            <th>Administrador</th>
+            </tr>
+    </thead>
+    <tr>
+        <td><h:inputText id="nombre" value="#{AdministradorBean.clienteClass.nombre}" required="true"/></td>
+        <td><h:inputText id="tipo" value="#{AdministradorBean.clienteClass.tipo}" required="true"/></td>
+        <td><h:inputText id="estado" value="#{AdministradorBean.clienteClass.estado}" required="true"/></td>
+        <td><h:inputDate id="fecha_alta" value="#{AdministradorBean.clienteClass.fecha_alta}" required="true"/></td>
+        <td><h:inputDate id="fecha_baja" value="#{AdministradorBean.clienteClass.fecha_baja}" required="true"/></td>
+        <td><h:inputText id="direccion" value="#{AdministradorBean.clienteClass.direccion}" required="true"/></td>
+        <td><h:inputText id="ciudad" value="#{AdministradorBean.clienteClass.ciudad}" required="true"/></td>
+        <td><h:inputText id="codigo_postal" value="#{AdministradorBean.clienteClass.codigo_postal}" required="true"/></td>
+        <td><h:inputText id="pais" value="#{AdministradorBean.clienteClass.pais}" required="true"/></td>
+        <td><h:inputBoolean id="Administrador" value="#{AdministradorBean.clienteClass.Administrador}" required="true"/></td>
+
+        <td><h:commandButton id="botonAniadir" action="#{AdministradorBean.aniadirContacto}" value="Añadir"/></td>
+
+    </tr>
+</table>
+
+</h:form>
+
+<h:messages id="mensajes"/>
+
+<h:form id="accionesClietnes">
+
+<h:dateTable id="tabla" value="#{AdministradorBean.todosClientes}" var="c">
+	<h:column>
+		<f:facet name="header">
+			Nombre
+		</f:facet>
+		<h:outputText id="nombre" value="#{c.nombre}"/>
+	</h:column>
+    <h:column>
+        <f:facet name="header">
+            tipo
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            estado
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            fecha_alta
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            fecha_baja
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            direccion
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            ciudad
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            codigo_postal
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            pais
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">
+            Administrador
+        </f:facet>
+        <h:uotputtext id="nombre" value="#{c.nombre}"/>
+    </h:column>
+
+    <h:column>
+		<h:commandButton id="eliminar" action="#{administradorBean.eliminar(c)}" value="Eliminar"/>
+	</h:column>
+</h:dateTable>
+</h:form>
+
+
+<h:form id="selector">
+	<h:selectOneMenu id="menuSeleccion" value="#{AdministradorBean.clienteElegido}">
+		<f:selectItems id="elemento" value="#{AdministradorBean.todosClientes}" 
+		var="c" itemLabel="#{c.nombre} #{c.apellido}" itemValue="#{c.apellido}"/>
+	</h:selectOneMenu>
+	<h:outputText id="textoClienteElegido" value="#{administradorBean.clienteElegido}"/>
+	<h:commandButton id="botonClienteElegido" value="Enviar"/>
+</h:form>
+</h:body>
+
+</html>

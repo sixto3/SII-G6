@@ -30,15 +30,16 @@ public class InicializaBBDD {
 		Divisa euro = new Divisa("eu", "euro", '€', 1);
 		Divisa libra = new Divisa("lib", "libra", '£', (float) 1.18);
 		
+
 		Empresa empresa = new Empresa(1,"P3310693A", "empresa", "activa",
 				Date.valueOf("2017-05-20"), Date.valueOf("2027-05-20"),
-				"Calle empresa", 29000, "Málaga", "España", false, "Razon social");
+				"Calle empresa", "29000", "Málaga", "España", false, "Razon social");
 		
 		List<Fintech> cuentasEmpresa = new ArrayList<>();
 		//-----------------------------------
 		Individual individual = new Individual(2, "63937528N", "individual", "activa", 
 				Date.valueOf("2016-04-10") , Date.valueOf("2026-04-10"), 
-				"Calle individual", 29500, "Álora", "España", false, "juan", "lópez", Date.valueOf("1947-09-13"));
+				"Calle individual", "29500", "Álora", "España", false, "juan", "lópez", Date.valueOf("1947-09-13"));
 		
 		Usuario usuario1 = new Usuario(individual.getNombre(), "juan", false, null, individual);
 		

@@ -5,10 +5,14 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.security.auth.message.config.AuthConfig;
+import javax.ws.rs.core.UriBuilder;
 
 import es.uma.g6.*;
-import es.uma.g6.AutorizacionId;
+import es.uma.g6.Individual;
+import es.uma.g6.Auxiliares.*;
+
 import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
 import exceptions.AutorizadoExistenteException;
@@ -28,6 +32,7 @@ import exceptions.SegregadaNoEncontradaException;
 import exceptions.UsuarioNoActivoException;
 import exceptions.UsuarioNoEncontradoException;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -376,6 +381,208 @@ public class AdministradorEJB implements gestionAdministrador{
 		}	
 	}
 
+public List<Individual> clientesParametros(searchParameters p){
+		
+		
+		Query query = em.createQuery("select i from Individual i where i.Nombre = ?1 AND i.Apellido =?2  AND i.Fecha_Alta = ?3 AND i.Fecha_Baja =? 4");  
+		query.setParameter(1, p.getNombre().getFirstName());
+		query.setParameter(2, p.getNombre().getLastName());
+		query.setParameter(3, p.getStartPeriod());
+		query.setParameter(4, p.getEndPeriod());
+		List<es.uma.g6.Individual> individual  = query.getResultList();
+		 return individual;
+	}
 	
+	
+	
+	
+
+public List <Autorizado> autorizadosParametros (searchParameters p){
+		
+	Query query = em.createQuery("select a from Autorizado a  where a.Nombre = ?1 AND a.Apellido =?2  AND a.Fecha_Alta = ?3 AND a.Fecha_Baja =? 4"); 
+	query.setParameter(1, p.getNombre().getFirstName());
+	query.setParameter(2, p.getNombre().getLastName());
+	query.setParameter(3, p.getStartPeriod());
+	query.setParameter(4, p.getEndPeriod());
+	List<Autorizado> autorizado = query.getResultList();
+		 return autorizado;
+		}
+
+
+public List<es.uma.g6.Auxiliares.Individual> individualParametros(searchParameters sp){
+	
+List<Individual> ind = this.clientesParametros(sp);
+	
+	List<es.uma.g6.Auxiliares.Individual> lista =null;
+	
+	List<Autorizado> aut= this.autorizadosParametros(sp);
+	
+	for (int i=0 ; i< ind.size(); i++) {
+		
+		es.uma.g6.Auxiliares.address direccion = new es.uma.g6.Auxiliares.address();
+		es.uma.g6.Auxiliares.Individual nuevo= new es.uma.g6.Auxiliares.Individual();
+		es.uma.g6.Auxiliares.name nombre = new es.uma.g6.Auxiliares.name();
+		nuevo.setDateOfBirth(ind.get(i).getFecha_Nacimiento());
+		nuevo.setIdentificationNumber(ind.get(i).getId());
+		direccion.setCity(ind.get(i).getCiudad());
+		direccion.setCountry(ind.get(i).getPaís());
+		direccion.setPostalCode(ind.get(i).getCodigo_Postal());
+		direccion.setStreetNumber(ind.get(i).getDireccion());
+		nuevo.setDireccion(direccion);
+		nombre.setFirstName(ind.get(i).getNombre());
+		nombre.setLastName(ind.get(i).getApellido());
+		nuevo.setName(nombre);
+		
+		List <es.uma.g6.Auxiliares.products> list_productos=null;
+		
+		
+				for(int j=0; j<ind.get(i).getCuentas_fintech().size();j++ ) {
+				
+				es.uma.g6.Auxiliares.products producto = new products();
+				
+				producto.setProductNumber(ind.get(i).getCuentas_fintech().get(j).getIBAN());
+				producto.setRelationship("propietaria");
+				producto.setStatus(ind.get(i).getCuentas_fintech().get(j).getEstado());
+				list_productos.add(producto);
+					
+			}
+				
+			
+		nuevo.setProductos(list_productos);
+		lista.add(nuevo);
+		
+	}
+	
+	for(int i = 0 ; i<aut.size(); i++) {
+		
+		List <es.uma.g6.Auxiliares.products> list_productos = null;
+		es.uma.g6.Auxiliares.address direccion = new es.uma.g6.Auxiliares.address();
+		es.uma.g6.Auxiliares.Individual nuevo= new es.uma.g6.Auxiliares.Individual();
+		es.uma.g6.Auxiliares.name nombre = new es.uma.g6.Auxiliares.name();
+		
+		nuevo.setDateOfBirth(aut.get(i).getFecha_nacimiento());
+		nuevo.setIdentificationNumber(aut.get(i).getId());
+		direccion.setCity(aut.get(i).getCiudad());
+		direccion.setCountry(aut.get(i).getPais());
+		direccion.setPostalCode(aut.get(i).getCodigo_Postal());
+		direccion.setStreetNumber(aut.get(i).getDireccion());
+		nuevo.setDireccion(direccion);
+		nombre.setFirstName(aut.get(i).getNombre());
+		nombre.setLastName(aut.get(i).getApellido());
+		nuevo.setName(nombre);
+		
+	
+		
+		
+		for(int j=0; j<aut.size();j++ ) {
+			
+			
+		
+		for (int m =0 ; m<aut.get(i).getLista_empresas().size(); m++) {
+			
+			
+			for (int h =0 ; h< aut.get(i).getLista_empresas().get(m).getEmpresa().getCuentas_fintech().size(); h++) {
+				
+	es.uma.g6.Auxiliares.products producto = new products();
+	producto.setProductNumber(aut.get(i).getLista_empresas().get(m).getEmpresa().getCuentas_fintech().get(h).getIBAN());
+	producto.setStatus(aut.get(i).getLista_empresas().get(m).getEmpresa().getCuentas_fintech().get(h).getEstado());
+	producto.setRelationship("autorizada");
+	list_productos.add(producto);
+	
+				
+			}
+			
+		}	
+	}
+	
+		nuevo.setProductos(list_productos);
+		lista.add(nuevo);
+
+}
+		return lista;
+	
+	
+}
+
+
+	
+	public List <products2> cuentasFintech(searchParameters2 p){
+		
+		Query query = em.createQuery("select fi from Fintech fi where fi.estado = ?1 OR fi.IBAN = ?2");  
+		query.setParameter(1, p.getStatus());
+		query.setParameter(2, p.getProductNumber());
+		List<Fintech> fintech = query.getResultList();
+		List<products2> list_prod = null;
+		String aux = "Activo";
+		String aux2= "Individual";
+		
+		for(int i=0; i<fintech.size();i++) {
+			
+			products2 producto = new products2();
+			address direccion = new address();
+			name nombre = new name();
+			accountHolder dueño = new accountHolder();
+			
+			if (fintech.get(i).getDuenio().getEstado().equals(aux)) {
+				
+				dueño.setActiveCustomer(true);
+			}else {
+				
+				dueño.setActiveCustomer(false);
+			}
+			
+			if(fintech.get(i).getDuenio().getTipo_Cliente().equals(aux2)){
+			
+			dueño.setAccounttype("Física");
+			Query query2 = em.createQuery("select i from Individual i where i.Identificación = ?1");  
+			query2.setParameter(1, fintech.get(i).getDuenio().getIdentificacion());
+			List<Individual> in = query2.getResultList();
+			nombre.setFirstName(in.get(0).getNombre());
+			nombre.setLastName(in.get(0).getApellido());
+			dueño.setName(nombre);
+			
+			}else {
+				
+			dueño.setAccounttype(fintech.get(i).getDuenio().getTipo_Cliente());
+			Query query3 = em.createQuery("select e from Empresa where e.Identificación = ?1");  
+			query3.setParameter(1, fintech.get(i).getDuenio().getIdentificacion());
+			List<Empresa> e = query3.getResultList();
+			nombre.setFirstName(e.get(0).getRazon_social());
+			nombre.setLastName("");
+			dueño.setName(nombre);
+				
+			}
+			
+			direccion.setCity(fintech.get(i).getDuenio().getCiudad());
+			direccion.setCountry(fintech.get(i).getDuenio().getPaís());
+			direccion.setPostalCode(fintech.get(i).getDuenio().getCodigo_Postal());
+			direccion.setStreetNumber(fintech.get(i).getDuenio().getDireccion());
+			dueño.setDireccion(direccion);
+			
+			producto.setProductNumber(fintech.get(i).getIBAN());
+			producto.setStatus(fintech.get(i).getEstado());
+			producto.setStartDate(fintech.get(i).getFechaApertura());
+			producto.setEndDate(fintech.get(i).getFechaCierre());
+			
+			producto.setAccountHolder(dueño);
+			list_prod.add(producto);
+		
+		}
+		return list_prod;
+	
+}
+
+	 
+	 @Override
+	    public Usuario refrescarUsuario(Usuario u) throws AdministracionException {
+		 	Usuario u2 =em.find(Usuario.class, u.getNombre());
+
+	        if(u==null) throw new UsuarioNoEncontradoException();
+	        Usuario user = em.find(Usuario.class, u.getNombre());
+	        em.refresh(user);
+	        return user;
+
+	    }
+
 
 }

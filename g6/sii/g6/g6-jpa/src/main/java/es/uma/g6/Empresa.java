@@ -18,7 +18,7 @@ public class Empresa extends Cliente{
 
 
 		public Empresa(int id, String identificacion, String tipo_Cliente, String estado, Date fecha_Alta, Date fecha_Baja,
-					   String direccion, int codigo_Postal, String ciudad, String país, boolean bloqueado, String razon_social) {
+					   String direccion, String codigo_Postal, String ciudad, String país, boolean bloqueado, String razon_social) {
 			super(id, identificacion, tipo_Cliente, estado, fecha_Alta, fecha_Baja, direccion,
 					codigo_Postal, ciudad, país, bloqueado);
 			this.razon_social = razon_social;

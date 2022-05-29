@@ -2,19 +2,26 @@ package es.uma.g6.backing;
 
 
 
-import java.util.Map;
+import java.util.List;
+
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
-import es.uma.g6.Cliente;
+
+import es.uma.g6.Autorizado;
+
+
 import es.uma.g6.ejb.gestionAdministrador;
 import es.uma.g6.ejb.gestionCliente;
+import exceptions.AdministracionException;
+import es.uma.g6.Individual;
+import es.uma.g6.Auxiliares.*;
+
+
 
 import javax.ws.rs.core.UriInfo;
 
@@ -23,7 +30,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("")
 public class ServicioRest {
 	
-	
+
 	@EJB
 	private gestionAdministrador gestionAdmin;
 	
@@ -33,7 +40,7 @@ public class ServicioRest {
 	@Context
 	private UriInfo uriInfo;
 	
-	private EntityManager em;
+
 	
 	
 	
@@ -42,6 +49,7 @@ public class ServicioRest {
 	@GET  
 	public Response estadoServicio() {     
 	        return Response.ok("OK").build();   
+	       	        
 	    } 
 	
 	
@@ -49,13 +57,32 @@ public class ServicioRest {
 	
 	@POST
 	@Path("/clients")
-	@Consumes ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces ({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes ({MediaType.APPLICATION_JSON})
+	@Produces ({MediaType.APPLICATION_JSON})
 	
-	public Response getCustomers(Cliente cliente) {
+	public Response getCustomers(searchParameters sp) throws AdministracionException {
 		
-		//query = em.createQuery("select I.IBAN ............ from  ...left join");
-		return Response.ok("OK").build();   
+	List<es.uma.g6.Auxiliares.Individual> lista = gestionAdmin.individualParametros(sp);
+		return Response.ok(lista).build();
+		
 }
+	
+	
+	@POST
+	@Path("/products")
+	@Consumes ({MediaType.APPLICATION_JSON})
+	@Produces ({MediaType.APPLICATION_JSON})
+	public Response getCuentas(searchParameters2 p) throws AdministracionException {
+		
+		
+		List<es.uma.g6.Auxiliares.products2> lista = gestionAdmin.cuentasFintech(p);
+			
+
+		return Response.ok(lista).build();
+	}
+	
+
+	
+	
 	}
 

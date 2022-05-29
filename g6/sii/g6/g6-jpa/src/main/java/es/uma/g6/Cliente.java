@@ -39,7 +39,7 @@ public class Cliente {
     private String Direccion;
 
     @Column(name= "Codigo_Postal", nullable = false)
-    private int Codigo_Postal;
+    private String Codigo_Postal;
 
     @Column(name= "Ciudad", nullable = false)
     private String Ciudad;
@@ -58,7 +58,7 @@ public class Cliente {
 
     public Cliente(int id, String identificacion, String tipo_Cliente, String estado,
                    Date fecha_Alta, Date fecha_Baja, String direccion,
-                   int codigo_Postal, String ciudad, String país, boolean bloqueado) {
+                   String codigo_Postal, String ciudad, String país, boolean bloqueado) {
         Id = id;
         Identificacion = identificacion;
         Tipo_Cliente = tipo_Cliente;
@@ -143,11 +143,11 @@ public class Cliente {
         Direccion = direccion;
     }
 
-    public int getCodigo_Postal() {
+    public String getCodigo_Postal() {
         return Codigo_Postal;
     }
 
-    public void setCodigo_Postal(int codigo_Postal) {
+    public void setCodigo_Postal(String codigo_Postal) {
         Codigo_Postal = codigo_Postal;
     }
 

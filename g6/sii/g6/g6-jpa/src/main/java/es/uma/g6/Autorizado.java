@@ -31,6 +31,10 @@ public class Autorizado {
 	private Date fechaFin;
 	@Column(nullable=false)
 	private boolean bloqueado;
+	
+	private String ciudad;
+	private String pais;
+	private String cdPostal;
 
 	@OneToMany(mappedBy = "autorizado")
 	private List<Autorizacion> lista_empresas;
@@ -40,8 +44,13 @@ public class Autorizado {
 	private Usuario usuarioAut;
 
 
-	public Autorizado(String identificacion, String nombre, String apellido, String direccion, Date fecha_nacimiento,
-			String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
+	
+
+	public Autorizado(int id, String identificacion, String nombre, String apellido, String direccion,
+			Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado, String ciudad,
+			String pais, String cdPostal, List<Autorizacion> lista_empresas, Usuario usuarioAut) {
+		super();
+		Id = id;
 		this.identificacion = identificacion;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -51,7 +60,24 @@ public class Autorizado {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.bloqueado = bloqueado;
+		this.ciudad = ciudad;
+		this.pais = pais;
+		this.cdPostal = cdPostal;
+		this.lista_empresas = lista_empresas;
+		this.usuarioAut = usuarioAut;
 	}
+	public Autorizado(String iden, String nombre, String apellido, String direccion,Date fecha_nacimiento, String estado, Date fechaInicio, Date fechaFin, boolean bloqueado) {
+		this.identificacion = iden;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.estado = estado;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.bloqueado = bloqueado;
+	}
+
 
 	public Autorizado() {
 
@@ -74,6 +100,44 @@ public class Autorizado {
 	public void setIdentificacion(String identificacion) {
 		this.identificacion = identificacion;
 	}
+
+	
+	
+	public String getCiudad() {
+		return ciudad;
+	}
+
+
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+
+
+	public String getPais() {
+		return pais;
+	}
+
+
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+
+
+	public String getCodigo_Postal() {
+		return cdPostal;
+	}
+
+
+
+	public void setCodigo_Postal(String cdPostal) {
+		this.cdPostal = cdPostal;
+	}
+
+
 
 	public String getNombre() {
 		return nombre;

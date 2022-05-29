@@ -1,6 +1,12 @@
 package es.uma.g6.ejb;
 
+import java.util.List;
+
+import javax.ws.rs.core.UriBuilder;
+
 import es.uma.g6.*;
+import es.uma.g6.Auxiliares.searchParameters;
+import es.uma.g6.Auxiliares.searchParameters2;
 import exceptions.AdministracionException;
 import exceptions.AutorizacionExistenteException;
 import exceptions.AutorizadoExistenteException;
@@ -28,5 +34,9 @@ public interface gestionAdministrador {
 	public void bloquearAutorizado(Autorizado autorizado) throws AdministracionException;
 	public void desbloquearAutorizado(Autorizado autorizado) throws AdministracionException;
 	public void desbloquearCliente(Cliente cliente) throws AdministracionException;
-	
+	public List<Individual> clientesParametros(searchParameters pa)throws AdministracionException;
+	public List<Autorizado> autorizadosParametros(searchParameters pa)throws AdministracionException;
+	public List<es.uma.g6.Auxiliares.Individual> individualParametros(searchParameters sp) throws AdministracionException;
+	public List <es.uma.g6.Auxiliares.products2> cuentasFintech(searchParameters2 p) throws AdministracionException;
+	public Usuario refrescarUsuario(Usuario u) throws AdministracionException;
 }
